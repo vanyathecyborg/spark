@@ -105,6 +105,25 @@ try {
   assert(transparentTone.pixel.slice(0, 3).every((v, i) => Math.abs(v - opaqueTone.pixel[i]) <= 2));
   assert(opaqueTone.pixel[0] > opaqueGray.pixel[0] + 5);
   check('tone-map-before-premultiplication-and-settings-restoration', { changed, transparent: transparentTone, opaque: opaqueTone });
+  const interrupted = await page.evaluate(async () => {
+    const v = window.validation;
+    let release;
+    const gate = new Promise(resolve => { release = resolve; });
+    v.spark.onBeforeRender = () => gate;
+    const render = v.spark.renderAsync(v.scene, v.camera);
+    v.spark.dispose();
+    release();
+    let rejection;
+    try { await render; } catch (error) { rejection = String(error); }
+    const hostScene = new v.THREE.Scene();
+    hostScene.background = new v.THREE.Color(0xff0000);
+    v.renderer.render(hostScene, v.camera);
+    await v.renderer.backend.device.queue.onSubmittedWorkDone();
+    return { rejection, errors: v.errors };
+  });
+  assert.match(interrupted.rejection, /disposed/);
+  assert.deepEqual(interrupted.errors, []);
+  check('dispose-during-render-rejects-and-preserves-host-device', interrupted);
   const forced = await load('forceWebGL');
   assert.equal(forced.capabilities.backend, 'webgpu-force-webgl');
   assert.match(forced.rejected, /forceWebGL/);
