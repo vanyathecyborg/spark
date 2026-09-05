@@ -1,0 +1,32 @@
+{
+  "protocol": "spark-orbit-v2",
+  "count": 3000000,
+  "repetitions": 5,
+  "configurations": [
+    [
+      2500000,
+      1920,
+      1080
+    ]
+  ],
+  "variants": [
+    {
+      "name": "upstream",
+      "port": 5320
+    },
+    {
+      "name": "ordering",
+      "port": 5321
+    }
+  ],
+  "headless": true,
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M4 Max"
+  },
+  "startedAt": "2026-09-05T20:17:14.486Z",
+  "timing": "rAF and draw-submission intervals; GPU completion unavailable",
+  "instrumentation": "bounded benchmark events",
+  "otherApplications": "Existing user applications were left unchanged. Only one benchmark browser runs at a time."
+}

@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "browser": "152.0.7977.77",
+  "file": "spark-webgl-lod-debug-2026-09-05T21-00-44-488Z.json",
+  "metrics": {
+    "type": "Object",
+    "version": 1,
+    "durationMs": 40002.60000002384,
+    "renderRequests": 2285,
+    "submittedFrames": 2285,
+    "raf": {
+      "type": "Object",
+      "count": 2284,
+      "p50": 16.69999999999709,
+      "p95": 33.19999999999709,
+      "p99": 33.400000000001455,
+      "max": 33.400000000001455,
+      "mean": 17.505122591944037,
+      "over50": 0,
+      "over100": 0
+    },
+    "submitted": {
+      "type": "Object",
+      "count": 2284,
+      "p50": 16.69999998807907,
+      "p95": 24.899999976158142,
+      "p99": 44.5,
+      "max": 56.30000001192093,
+      "mean": 17.500394045549807,
+      "over50": 8,
+      "over100": 0
+    },
+    "gpuCompletion": "unavailable",
+    "failures": [],
+    "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+  },
+  "errors": []
+}

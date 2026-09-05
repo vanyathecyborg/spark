@@ -1,0 +1,82 @@
+{
+  "browser": "152.0.7977.77",
+  "state": "ready",
+  "extra": {
+    "reason": "public-scene-validation",
+    "protocol": {
+      "id": "spark-orbit-v2",
+      "warmupMs": 5000,
+      "movementMs": 30000,
+      "restMs": 10000,
+      "readinessTimeoutMs": 60000,
+      "stableMs": 500,
+      "workload": "motion-route",
+      "fixedPoseMs": null
+    },
+    "identity": {
+      "revision": "f360b61c3c2a3f5437cb3771150f05e0280ded1b",
+      "sourceSha256": "ebcc9682b26f8f1aecc974abfa93dbd4b22d784a882eeb2ce4ef31470ef8e6aa",
+      "wasmSha256": "8de0abc0361d74cb9705676affa94301232ebf72c55753f671dc8f324a1c453d",
+      "dependencyLockSha256": "987dad0a9c21634e943952e135ee3845b08892c656a26e34101072015a07530a",
+      "harnessSha256": "667499518cc96df7c19f972a8f94886feccabbda3a143123e010b2921b1dfdd2",
+      "workingTreeDirty": true,
+      "node": "v23.10.0"
+    },
+    "asset": {
+      "id": "houseplant",
+      "kind": "scanned-object",
+      "label": "Houseplant scan",
+      "count": 113648,
+      "fileSha256": "ce9d490b18f16d6730d832227bf541431b8b1a5d167c5a3fe89af4f324c0d8fd",
+      "license": "CC-BY-4.0",
+      "attribution": "Houseplant Gaussian splat by Marcel Padilla, Gaussian Splat Objects Dataset, CC BY 4.0. Displayed with rotation, scale and translation; rendered with Spark.",
+      "sourceUrl": "https://raw.githubusercontent.com/marcelpadilla/splats/ac7f3850ceadbc0483d10c9f0b597c2ba5e89009/data/plant/plant.splat",
+      "metadataUrl": "https://raw.githubusercontent.com/marcelpadilla/splats/ac7f3850ceadbc0483d10c9f0b597c2ba5e89009/data/plant/meta.json",
+      "transform": {
+        "rotationX": 3.141592653589793,
+        "uniformScale": 6
+      },
+      "sourceSha256": "f6df1976576870486bd597d114e3eb3238cae388504cce9552d1a33db4a3e5e8",
+      "lodSha256": "6d89e18c999d255117057be15c3149ba3f8fff5a8a9304388332109a4c5b11b4",
+      "lodNodeCount": 136918
+    },
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+      "browserHardware": {
+        "vendor": "Google Inc. (Apple)",
+        "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+      },
+      "threeRevision": "180",
+      "width": 960,
+      "height": 540,
+      "pixelRatio": 1
+    },
+    "quality": {
+      "requestedBudget": "2500000",
+      "effectiveBudget": 2500000,
+      "opacityQuadRadius": false,
+      "sh": 0,
+      "backend": "webgl",
+      "strategy": "gpu-readback",
+      "lod": true
+    },
+    "run": {
+      "state": "ready",
+      "warmupDone": false,
+      "restSettleMs": null,
+      "failures": [],
+      "selected": 103602,
+      "drawn": 103602
+    },
+    "instrumentation": {
+      "mode": "bounded-benchmark-events",
+      "internalGuardedEvents": "may be unavailable when verbose diagnostics are off",
+      "freshness": "Age of the request whose result was last applied; null until its request/apply events are observed"
+    },
+    "timingCoverage": {
+      "gpuCompletion": "unavailable",
+      "gpuPasses": "unavailable; timestamp feature is not requested by this configuration"
+    }
+  },
+  "errors": []
+}

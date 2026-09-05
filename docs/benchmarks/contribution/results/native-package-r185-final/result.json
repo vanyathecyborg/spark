@@ -1,0 +1,182 @@
+{
+  "browser": "152.0.7977.77",
+  "checks": [
+    {
+      "name": "opaque-depth-occlusion",
+      "linear": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "screenshot": {
+        "pixel": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "width": 320,
+        "height": 240
+      }
+    },
+    {
+      "name": "linear-gray-and-final-color",
+      "linear": [
+        0.21923828125,
+        0.21923828125,
+        0.21923828125,
+        1
+      ],
+      "screenshot": {
+        "pixel": [
+          129,
+          129,
+          129,
+          255
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "width": 320,
+        "height": 240
+      }
+    },
+    {
+      "name": "resize",
+      "linear": [
+        0.2193603515625,
+        0.2193603515625,
+        0.2193603515625,
+        1
+      ]
+    },
+    {
+      "name": "callback-unsupported-before-upload-and-recovery",
+      "rejected": "Error: Spark: nonuniform, mirrored or sheared splat transforms requires THREE.WebGLRenderer; native output was not submitted.",
+      "uploads": 0,
+      "freeBefore": 2,
+      "freeAfter": 2,
+      "errors": []
+    },
+    {
+      "name": "unsupported-transparent-mesh-rejected",
+      "message": "Error: Spark: transparent or transmissive Three.js objects requires THREE.WebGLRenderer; native output was not submitted."
+    },
+    {
+      "name": "idempotent-dispose-and-render-rejection",
+      "message": "Error: SparkRenderer is disposed"
+    },
+    {
+      "name": "straight-color-through-transparent-canvas",
+      "linear": [
+        0.11004638671875,
+        0.11004638671875,
+        0.11004638671875,
+        0.50146484375
+      ],
+      "screenshot": {
+        "pixel": [
+          129,
+          129,
+          129,
+          128
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "width": 320,
+        "height": 240
+      }
+    },
+    {
+      "name": "tone-map-before-premultiplication-and-settings-restoration",
+      "changed": {
+        "toneMapping": 4,
+        "colorSpace": "srgb",
+        "errors": []
+      },
+      "transparent": {
+        "pixel": [
+          141,
+          141,
+          141,
+          128
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "width": 320,
+        "height": 240
+      },
+      "opaque": {
+        "pixel": [
+          142,
+          142,
+          142,
+          255
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "width": 320,
+        "height": 240
+      }
+    },
+    {
+      "name": "forceWebGL-explicit-rejection",
+      "result": {
+        "ready": true,
+        "rejected": "Error: Spark: initialize a native Three.js WebGPURenderer before construction. WebGPURenderer({forceWebGL:true}) is not supported; use THREE.WebGLRenderer for the WebGL route.",
+        "capabilities": {
+          "backend": "webgpu-force-webgl",
+          "nativeStatus": null,
+          "features": {
+            "paging": false,
+            "xr": false,
+            "modifiers": false,
+            "editing": false,
+            "skinning": false,
+            "specializedTargets": false,
+            "covarianceSplats": false,
+            "transparentMeshes": false,
+            "msaa": false,
+            "nonuniformSplatTransforms": false
+          },
+          "limits": {
+            "maxBufferSize": null,
+            "maxStorageBufferBindingSize": null,
+            "maxTextureDimension2D": null
+          }
+        },
+        "errors": []
+      }
+    }
+  ],
+  "passed": true,
+  "adapter": {
+    "vendor": "apple",
+    "architecture": "metal-3",
+    "device": "",
+    "description": ""
+  },
+  "errors": []
+}

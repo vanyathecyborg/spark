@@ -1,0 +1,14 @@
+{
+  "kind": "SparkLodTraversalComparison",
+  "referenceCommit": "722255799e26db7cc41c2649638b0aa5214624c6",
+  "runtime": {
+    "node": "v23.10.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M4 Max",
+    "parallelism": 14
+  },
+  "testCases": 448,
+  "samples": [],
+  "passed": true
+}

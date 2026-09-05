@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {cameraPose,submitFrame,pendingWork} from './protocol.js';
+assert.deepEqual(cameraPose(40000),cameraPose(30000));
+assert.deepEqual(cameraPose(15000),cameraPose(15000));
+assert.equal(pendingWork({lodWorker:{queue:[]}}),true);
+assert.equal(pendingWork({lodWorker:{queue:null,messages:{}}}),false);
+let release;const events=[];const camera={position:{set:()=>events.push('camera')},lookAt:()=>{},updateMatrixWorld:()=>{}};
+const first=submitFrame({camera,pose:cameraPose(0),render:()=>new Promise(r=>{release=r;events.push('submitted');})});
+let finished=false;first.then(()=>finished=true);await Promise.resolve();assert.equal(finished,false);release();await first;assert.equal(finished,true);assert.deepEqual(events,['camera','submitted']);
+console.log('Camera route timing, pending traversal and awaited submission checks passed.');

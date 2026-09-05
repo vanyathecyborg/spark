@@ -1,0 +1,22 @@
+{
+  "node": "v23.10.0",
+  "package": "6c5506392e2667870656bc263ae4cb5154aedf1a",
+  "checks": [
+    {
+      "three": "0.180.0",
+      "types": "0.180.0",
+      "typecheck": true,
+      "esm": true,
+      "commonjs": true,
+      "lock": 3
+    },
+    {
+      "three": "0.185.1",
+      "types": "0.185.4",
+      "typecheck": true,
+      "esm": true,
+      "commonjs": true,
+      "lock": 3
+    }
+  ]
+}

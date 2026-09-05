@@ -1,0 +1,6 @@
+{
+  "captureIntegrity": "passed",
+  "performanceClaimQualified": false,
+  "reason": "A separate Chromium world scene was actively rendering about 54.4 million triangles at 20 FPS during the runs; browser lifecycle/run-order variability was also observed.",
+  "rawRunsRetained": true
+}

@@ -1,0 +1,115 @@
+{
+  "result": {
+    "pass": true,
+    "cases": [
+      {
+        "n": 0,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 0,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 1,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 1,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 2047,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 2047,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 2048,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 2048,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 2049,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 2049,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 4096,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 4096,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 65537,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 65537,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 1500000,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 1500000,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 2500000,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 2500000,
+        "pattern": "ties",
+        "pass": true
+      },
+      {
+        "n": 2049,
+        "pattern": "random",
+        "pass": true
+      },
+      {
+        "n": 2049,
+        "pattern": "ties",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "device": "",
+      "description": ""
+    }
+  },
+  "errors": []
+}

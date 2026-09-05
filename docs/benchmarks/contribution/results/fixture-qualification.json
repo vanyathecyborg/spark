@@ -1,0 +1,148 @@
+[
+  {
+    "variant": "upstream",
+    "state": "ready",
+    "extra": {
+      "reason": "fixture-qualification",
+      "protocol": {
+        "id": "spark-orbit-v2",
+        "warmupMs": 5000,
+        "movementMs": 30000,
+        "restMs": 10000,
+        "readinessTimeoutMs": 60000,
+        "stableMs": 500
+      },
+      "identity": {
+        "revision": "722255799e26db7cc41c2649638b0aa5214624c6",
+        "sourceSha256": "f077e88cd33144a68206e1c4a0f4880ecd0840720098327c4ccd5afe1d018721",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "7135a6d60509c0e60d8a95f614eee393216ae39d38d34f881347b731dd2f0600",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 500000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "7d545a2959441ec5de7ea99199e063108b37318ff49a4f3416a3ad68b77959e0",
+        "lodSha256": "78e07db00d6e0394c678d04b6640173c4998cac8b24c3ec9eac66d1d73c610da",
+        "lodNodeCount": 864088
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "quality": {
+        "requestedBudget": "2500000",
+        "effectiveBudget": 2500000,
+        "opacityQuadRadius": false,
+        "sh": 0,
+        "backend": "webgl",
+        "strategy": "gpu-readback",
+        "lod": true
+      },
+      "run": {
+        "state": "ready",
+        "warmupDone": false,
+        "restSettleMs": null,
+        "failures": [],
+        "selected": 498793,
+        "drawn": 498793
+      },
+      "instrumentation": {
+        "mode": "bounded-benchmark-events",
+        "internalGuardedEvents": "may be unavailable when verbose diagnostics are off"
+      },
+      "timingCoverage": {
+        "gpuCompletion": "unavailable",
+        "gpuPasses": "unavailable; timestamp feature is not requested by this configuration"
+      }
+    },
+    "errors": []
+  },
+  {
+    "variant": "ordering",
+    "state": "ready",
+    "extra": {
+      "reason": "fixture-qualification",
+      "protocol": {
+        "id": "spark-orbit-v2",
+        "warmupMs": 5000,
+        "movementMs": 30000,
+        "restMs": 10000,
+        "readinessTimeoutMs": 60000,
+        "stableMs": 500
+      },
+      "identity": {
+        "revision": "82d463a0ffe012134782699bfbb4854ca86c6bd5",
+        "sourceSha256": "cb8fef3bf67d3130fc563d49be1a3030fb1fd62077fef0ffd8af367801874221",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "7135a6d60509c0e60d8a95f614eee393216ae39d38d34f881347b731dd2f0600",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 500000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "7d545a2959441ec5de7ea99199e063108b37318ff49a4f3416a3ad68b77959e0",
+        "lodSha256": "78e07db00d6e0394c678d04b6640173c4998cac8b24c3ec9eac66d1d73c610da",
+        "lodNodeCount": 864088
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "quality": {
+        "requestedBudget": "2500000",
+        "effectiveBudget": 2500000,
+        "opacityQuadRadius": false,
+        "sh": 0,
+        "backend": "webgl",
+        "strategy": "gpu-readback",
+        "lod": true
+      },
+      "run": {
+        "state": "ready",
+        "warmupDone": false,
+        "restSettleMs": null,
+        "failures": [],
+        "selected": 498793,
+        "drawn": 498793
+      },
+      "instrumentation": {
+        "mode": "bounded-benchmark-events",
+        "internalGuardedEvents": "may be unavailable when verbose diagnostics are off"
+      },
+      "timingCoverage": {
+        "gpuCompletion": "unavailable",
+        "gpuPasses": "unavailable; timestamp feature is not requested by this configuration"
+      }
+    },
+    "errors": []
+  }
+]

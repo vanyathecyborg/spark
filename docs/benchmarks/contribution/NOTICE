@@ -1,0 +1,19 @@
+Benchmark harness and seeded synthetic courtyard: Copyright (c) 2026 Ivan Kalinin, MIT.
+
+The houseplant scan in assets/houseplant.splat is a separate CC BY 4.0 work:
+Houseplant Gaussian splat by Marcel Padilla, Gaussian Splat Objects Dataset.
+https://marcelpadilla.com/Projects/Gaussian_Splat_Object_Dataset/index.html
+https://creativecommons.org/licenses/by/4.0/
+The original file is unchanged; the viewer applies rotation and scale and creates LoD data.
+The source revision, author, file hash and attribution are in assets/houseplant.json.
+Include this attribution in public footage and accompanying post descriptions.
+
+Spark-derived observation code is MIT, Copyright (c) 2025 WORLD LABS TECHNOLOGIES, INC.
+https://github.com/sparkjsdev/spark
+
+The native radix validation tests Spark's adaptation of PlayCanvas Engine's
+GPU radix shaders, which follow kishimisu's WebGPU-Radix-Sort work. Attribution
+and the MIT license texts are retained in the native renderer's NOTICE:
+https://github.com/playcanvas/engine
+https://github.com/kishimisu/WebGPU-Radix-Sort
+The allocation-only contribution does not include those native shaders.

@@ -1,0 +1,358 @@
+{
+  "runs": [
+    {
+      "file": "spark-webgl-lod-debug-2026-09-05T17-33-31-117Z.json",
+      "sha256": "bce446906e3a1dda5552f2da5b8e6d541241a53b0c08208e05a56bf957b57b38",
+      "events": 3135,
+      "sequenceContinuous": true,
+      "completeMarkers": true,
+      "effectiveBudget": 2500000,
+      "traversalMs": {
+        "samples": 115,
+        "p50": 523.3999999761581,
+        "p95": 686.8999999761581,
+        "p99": 729.1999999880791,
+        "over50": 115,
+        "over100": 115,
+        "max": 730.5,
+        "percentileMethod": "nearest rank ceil(n*p)-1"
+      },
+      "traversalCompletions": 115,
+      "countInvariant": {
+        "checked": 115,
+        "failures": 0,
+        "selectionEquivalence": "not established by counts"
+      },
+      "sorts": 473,
+      "sortMs": {
+        "total": {
+          "samples": 473,
+          "p50": 121.89999997615814,
+          "p95": 233.4000000357628,
+          "p99": 260.80000001192093,
+          "over50": 371,
+          "over100": 281,
+          "max": 275.5,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "depth": {
+          "samples": 473,
+          "p50": 99.19999998807907,
+          "p95": 163.9000000357628,
+          "p99": 184.5,
+          "over50": 307,
+          "over100": 232,
+          "max": 192,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "worker": {
+          "samples": 473,
+          "p50": 9.699999988079071,
+          "p95": 12.199999988079071,
+          "p99": 14.900000035762787,
+          "over50": 0,
+          "over100": 0,
+          "max": 19.600000023841858,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "orderingUpload": {
+          "samples": 473,
+          "p50": 14.399999976158142,
+          "p95": 65.59999996423721,
+          "p99": 77.80000001192093,
+          "over50": 100,
+          "over100": 0,
+          "max": 87.69999998807907,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "uploadMsByRows": {
+        "153": {
+          "samples": 186,
+          "p50": 0.20000004768371582,
+          "p95": 16.900000035762787,
+          "p99": 33.60000002384186,
+          "over50": 0,
+          "over100": 0,
+          "max": 40.80000001192093,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "1024": {
+          "samples": 287,
+          "p50": 43.09999996423721,
+          "p95": 71.60000002384186,
+          "p99": 82.10000002384186,
+          "over50": 100,
+          "over100": 0,
+          "max": 87.69999998807907,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "fullCaptureFrames": {
+        "raf": null,
+        "submitted": null
+      },
+      "recordedStallsOver50": 197,
+      "failureIndicators": [],
+      "claimLimit": "Manual historical camera routes and opacity settings differ; worker/CPU latency is not an equal-quality FPS comparison."
+    },
+    {
+      "file": "spark-webgl-lod-debug-2026-09-05T15-18-20-622Z.json",
+      "sha256": "9b902252734ea97729591495b16ffe34c1d4ed614998c39bcc942ff6b95b503b",
+      "events": 2210,
+      "sequenceContinuous": true,
+      "completeMarkers": true,
+      "effectiveBudget": 2500000,
+      "traversalMs": {
+        "samples": 172,
+        "p50": 240.30000001192093,
+        "p95": 269.39999997615814,
+        "p99": 287.30000001192093,
+        "over50": 172,
+        "over100": 172,
+        "max": 307.69999998807907,
+        "percentileMethod": "nearest rank ceil(n*p)-1"
+      },
+      "traversalCompletions": 172,
+      "countInvariant": {
+        "checked": 172,
+        "failures": 0,
+        "selectionEquivalence": "not established by counts"
+      },
+      "sorts": 722,
+      "sortMs": {
+        "total": {
+          "samples": 719,
+          "p50": 69.39999997615814,
+          "p95": 138.79999995231628,
+          "p99": 152.0999999642372,
+          "over50": 534,
+          "over100": 140,
+          "max": 197.30000001192093,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "depth": {
+          "samples": 719,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "worker": {
+          "samples": 719,
+          "p50": 14,
+          "p95": 31.899999976158142,
+          "p99": 73.60000002384186,
+          "over50": 15,
+          "over100": 3,
+          "max": 126,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "orderingUpload": {
+          "samples": 719,
+          "p50": 44,
+          "p95": 87.39999997615814,
+          "p99": 100.69999998807907,
+          "over50": 290,
+          "over100": 9,
+          "max": 141.60000002384186,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "uploadMsByRows": {
+        "153": {
+          "samples": 719,
+          "p50": 44,
+          "p95": 87.39999997615814,
+          "p99": 100.69999998807907,
+          "over50": 290,
+          "over100": 9,
+          "max": 141.60000002384186,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "fullCaptureFrames": {
+        "raf": null,
+        "submitted": null
+      },
+      "recordedStallsOver50": 157,
+      "failureIndicators": [],
+      "claimLimit": "Manual historical camera routes and opacity settings differ; worker/CPU latency is not an equal-quality FPS comparison."
+    },
+    {
+      "file": "spark-webgpu-lod-debug-2026-09-05T15-16-32-279Z.json",
+      "sha256": "dbfdf644b03701ad35c31d4956498ec00565b563d09d8967ebe3820e6ae988b9",
+      "events": 2859,
+      "sequenceContinuous": true,
+      "completeMarkers": true,
+      "effectiveBudget": 2500000,
+      "traversalMs": {
+        "samples": 190,
+        "p50": 246.19999998807907,
+        "p95": 282.39999997615814,
+        "p99": 320.5,
+        "over50": 190,
+        "over100": 190,
+        "max": 332.30000001192093,
+        "percentileMethod": "nearest rank ceil(n*p)-1"
+      },
+      "traversalCompletions": 190,
+      "countInvariant": {
+        "checked": 190,
+        "failures": 0,
+        "selectionEquivalence": "not established by counts"
+      },
+      "sorts": 1579,
+      "sortMs": {
+        "total": {
+          "samples": 1579,
+          "p50": 1.5,
+          "p95": 2.200000047683716,
+          "p99": 6,
+          "over50": 1,
+          "over100": 0,
+          "max": 52,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "depth": {
+          "samples": 1579,
+          "p50": 1.5,
+          "p95": 2.200000047683716,
+          "p99": 6,
+          "over50": 1,
+          "over100": 0,
+          "max": 52,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "worker": {
+          "samples": 1579,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "orderingUpload": {
+          "samples": 1579,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "uploadMsByRows": {
+        "153": {
+          "samples": 1579,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "fullCaptureFrames": {
+        "raf": null,
+        "submitted": null
+      },
+      "recordedStallsOver50": 159,
+      "failureIndicators": [],
+      "claimLimit": "Manual historical camera routes and opacity settings differ; worker/CPU latency is not an equal-quality FPS comparison."
+    },
+    {
+      "file": "spark-webgpu-lod-debug-2026-09-05T15-22-46-698Z.json",
+      "sha256": "5725d4050b071c173d0c34434f4fa4d633c3e89e00c032cc911cafe0a3f152f6",
+      "events": 2742,
+      "sequenceContinuous": true,
+      "completeMarkers": true,
+      "effectiveBudget": 1500000,
+      "traversalMs": {
+        "samples": 216,
+        "p50": 130.60000002384186,
+        "p95": 146.30000001192093,
+        "p99": 157.70000004768372,
+        "over50": 216,
+        "over100": 216,
+        "max": 161.19999998807907,
+        "percentileMethod": "nearest rank ceil(n*p)-1"
+      },
+      "traversalCompletions": 216,
+      "countInvariant": {
+        "checked": 216,
+        "failures": 0,
+        "selectionEquivalence": "not established by counts"
+      },
+      "sorts": 1532,
+      "sortMs": {
+        "total": {
+          "samples": 1532,
+          "p50": 1.399999976158142,
+          "p95": 2.199999988079071,
+          "p99": 4,
+          "over50": 0,
+          "over100": 0,
+          "max": 43.10000002384186,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "depth": {
+          "samples": 1532,
+          "p50": 1.399999976158142,
+          "p95": 2.199999988079071,
+          "p99": 4,
+          "over50": 0,
+          "over100": 0,
+          "max": 43.10000002384186,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "worker": {
+          "samples": 1532,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        },
+        "orderingUpload": {
+          "samples": 1532,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "uploadMsByRows": {
+        "92": {
+          "samples": 1532,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "over50": 0,
+          "over100": 0,
+          "max": 0,
+          "percentileMethod": "nearest rank ceil(n*p)-1"
+        }
+      },
+      "fullCaptureFrames": {
+        "raf": null,
+        "submitted": null
+      },
+      "recordedStallsOver50": 17,
+      "failureIndicators": [],
+      "claimLimit": "Manual historical camera routes and opacity settings differ; worker/CPU latency is not an equal-quality FPS comparison."
+    }
+  ]
+}

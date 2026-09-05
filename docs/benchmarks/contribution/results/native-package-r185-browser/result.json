@@ -1,0 +1,84 @@
+{
+  "browser": "152.0.7977.77",
+  "checks": [
+    {
+      "name": "opaque-depth-occlusion",
+      "linear": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "screenshot": {
+        "pixel": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "width": 320,
+        "height": 240
+      }
+    },
+    {
+      "name": "linear-gray-and-final-color",
+      "linear": [
+        0.21923828125,
+        0.21923828125,
+        0.21923828125,
+        1
+      ],
+      "screenshot": {
+        "pixel": [
+          129,
+          129,
+          129,
+          255
+        ],
+        "corner": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "width": 320,
+        "height": 240
+      }
+    },
+    {
+      "name": "resize",
+      "linear": [
+        0.2193603515625,
+        0.2193603515625,
+        0.2193603515625,
+        1
+      ]
+    },
+    {
+      "name": "callback-unsupported-before-upload-and-recovery",
+      "rejected": "Error: Spark: nonuniform, mirrored or sheared splat transforms requires THREE.WebGLRenderer; native output was not submitted.",
+      "uploads": 0,
+      "freeBefore": 2,
+      "freeAfter": 2,
+      "errors": []
+    },
+    {
+      "name": "idempotent-dispose-and-render-rejection",
+      "message": "Error: SparkRenderer is disposed"
+    }
+  ],
+  "passed": false,
+  "adapter": {
+    "vendor": "apple",
+    "architecture": "metal-3",
+    "device": "",
+    "description": ""
+  },
+  "errors": []
+}

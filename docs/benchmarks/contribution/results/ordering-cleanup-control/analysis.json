@@ -1,0 +1,622 @@
+{
+  "aggregation": "Median of each metric across whole runs; min/max show run variability. No run is discarded for unfavorable results. Frame phases use interval endpoint time.",
+  "invalidRuns": [],
+  "runs": [
+    {
+      "id": "upstream-2500000-1920x1080-r1",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 1,
+      "file": "upstream-2500000-1920x1080-r1-spark-webgl-lod-debug-2026-09-05T20-28-53-295Z.json",
+      "restSettleMs": 2831.599999964237,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2108,
+      "fullFrameP50": 16.600000023841858,
+      "fullFrameP95": 41.19999998807907,
+      "fullFrameP99": 93.5,
+      "fullFrameOver50": 86,
+      "fullFrameOver100": 3,
+      "motionFrameSamples": 1582,
+      "motionFrameP50": 16.600000023841858,
+      "motionFrameP95": 37.10000002384186,
+      "motionFrameP99": 94.40000003576279,
+      "motionFrameOver50": 63,
+      "motionFrameOver100": 3,
+      "restFrameSamples": 526,
+      "restFrameP50": 16.600000023841858,
+      "restFrameP95": 47.299999952316284,
+      "restFrameP99": 65.5,
+      "restFrameOver50": 23,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9677572309151257,
+      "selectionRequestAgeMsP50": 1582.300000011921,
+      "selectionRequestAgeMsP95": 6412.399999976158,
+      "orderingRequestAgeMsKnownFraction": 0.9990516832622096,
+      "orderingRequestAgeMsP50": 173,
+      "orderingRequestAgeMsP95": 5333,
+      "workerTraverseMsP50": 939.9000000357628,
+      "workerTraverseMsP95": 1175,
+      "workerTraverseMsSamples": 33,
+      "depthP50": 8.5,
+      "depthP95": 169.10000002384186,
+      "depthSamples": 712,
+      "workerP50": 9.900000035762787,
+      "workerP95": 11.199999988079071,
+      "workerSamples": 712,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 0.6000000238418579,
+      "orderingUploadSamples": 712
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r1",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 1,
+      "file": "ordering-2500000-1920x1080-r1-spark-webgl-lod-debug-2026-09-05T20-29-52-285Z.json",
+      "restSettleMs": 1299.2999999523163,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2400,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 18.099999964237213,
+      "fullFrameP99": 18.80000001192093,
+      "fullFrameOver50": 0,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1799,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 18.200000047683716,
+      "motionFrameP99": 18.80000001192093,
+      "motionFrameOver50": 0,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.5,
+      "restFrameP99": 17.69999998807907,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9725114535610162,
+      "selectionRequestAgeMsP50": 1530.0999999642372,
+      "selectionRequestAgeMsP95": 7616.299999952316,
+      "orderingRequestAgeMsKnownFraction": 0.9991670137442732,
+      "orderingRequestAgeMsP50": 28.599999964237213,
+      "orderingRequestAgeMsP95": 6765.699999988079,
+      "workerTraverseMsP50": 933.8999999761581,
+      "workerTraverseMsP95": 1008.1000000238419,
+      "workerTraverseMsSamples": 33,
+      "depthP50": 7.800000011920929,
+      "depthP95": 12.300000011920929,
+      "depthSamples": 1542,
+      "workerP50": 9,
+      "workerP95": 9.699999988079071,
+      "workerSamples": 1542,
+      "orderingUploadP50": 0.19999998807907104,
+      "orderingUploadP95": 0.40000003576278687,
+      "orderingUploadSamples": 1542
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r2",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 2,
+      "file": "ordering-2500000-1920x1080-r2-spark-webgl-lod-debug-2026-09-05T20-30-50-724Z.json",
+      "restSettleMs": 2149.400000035763,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2400,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 18.100000023841858,
+      "fullFrameP99": 18.80000001192093,
+      "fullFrameOver50": 0,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1799,
+      "motionFrameP50": 16.700000047683716,
+      "motionFrameP95": 18.299999952316284,
+      "motionFrameP99": 18.899999976158142,
+      "motionFrameOver50": 0,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.400000035762787,
+      "restFrameP99": 17.69999998807907,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9725114535610162,
+      "selectionRequestAgeMsP50": 1650,
+      "selectionRequestAgeMsP95": 6798.699999988079,
+      "orderingRequestAgeMsKnownFraction": 0.9991670137442732,
+      "orderingRequestAgeMsP50": 32.69999998807907,
+      "orderingRequestAgeMsP95": 5916.399999976158,
+      "workerTraverseMsP50": 1037.8999999761581,
+      "workerTraverseMsP95": 1111.5,
+      "workerTraverseMsSamples": 31,
+      "depthP50": 7.899999976158142,
+      "depthP95": 12.5,
+      "depthSamples": 1517,
+      "workerP50": 9.100000023841858,
+      "workerP95": 10,
+      "workerSamples": 1517,
+      "orderingUploadP50": 0.19999998807907104,
+      "orderingUploadP95": 0.3999999761581421,
+      "orderingUploadSamples": 1517
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r2",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 2,
+      "file": "upstream-2500000-1920x1080-r2-spark-webgl-lod-debug-2026-09-05T20-31-49-814Z.json",
+      "restSettleMs": 3015.100000023842,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2372,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 19.19999998807907,
+      "fullFrameP99": 20.69999998807907,
+      "fullFrameOver50": 9,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1771,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 19.400000035762787,
+      "motionFrameP99": 21.100000023841858,
+      "motionFrameOver50": 9,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.599999964237213,
+      "restFrameP99": 17.69999998807907,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9823008849557522,
+      "selectionRequestAgeMsP50": 2000.1000000238419,
+      "selectionRequestAgeMsP95": 6082.200000047684,
+      "orderingRequestAgeMsKnownFraction": 0.9966287399915719,
+      "orderingRequestAgeMsP50": 39,
+      "orderingRequestAgeMsP95": 5049.400000035763,
+      "workerTraverseMsP50": 1252.2000000476837,
+      "workerTraverseMsP95": 1477.8999999761581,
+      "workerTraverseMsSamples": 26,
+      "depthP50": 8.399999976158142,
+      "depthP95": 13,
+      "depthSamples": 1204,
+      "workerP50": 12.099999964237213,
+      "workerP95": 16.5,
+      "workerSamples": 1204,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 0.699999988079071,
+      "orderingUploadSamples": 1204
+    }
+  ],
+  "groups": [
+    {
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "runs": 2,
+      "metrics": {
+        "restSettleMs": {
+          "medianAcrossRuns": 2923.3499999940395,
+          "minRun": 2831.599999964237,
+          "maxRun": 3015.100000023842
+        },
+        "drawn": {
+          "medianAcrossRuns": 2500000.0,
+          "minRun": 2500000,
+          "maxRun": 2500000
+        },
+        "orderingCapacity": {
+          "medianAcrossRuns": 3014656.0,
+          "minRun": 3014656,
+          "maxRun": 3014656
+        },
+        "orderingCpuBytes": {
+          "medianAcrossRuns": 12058624.0,
+          "minRun": 12058624,
+          "maxRun": 12058624
+        },
+        "fullFrameSamples": {
+          "medianAcrossRuns": 2240.0,
+          "minRun": 2108,
+          "maxRun": 2372
+        },
+        "fullFrameP50": {
+          "medianAcrossRuns": 16.650000005960464,
+          "minRun": 16.600000023841858,
+          "maxRun": 16.69999998807907
+        },
+        "fullFrameP95": {
+          "medianAcrossRuns": 30.19999998807907,
+          "minRun": 19.19999998807907,
+          "maxRun": 41.19999998807907
+        },
+        "fullFrameP99": {
+          "medianAcrossRuns": 57.099999994039536,
+          "minRun": 20.69999998807907,
+          "maxRun": 93.5
+        },
+        "fullFrameOver50": {
+          "medianAcrossRuns": 47.5,
+          "minRun": 9,
+          "maxRun": 86
+        },
+        "fullFrameOver100": {
+          "medianAcrossRuns": 1.5,
+          "minRun": 0,
+          "maxRun": 3
+        },
+        "motionFrameSamples": {
+          "medianAcrossRuns": 1676.5,
+          "minRun": 1582,
+          "maxRun": 1771
+        },
+        "motionFrameP50": {
+          "medianAcrossRuns": 16.650000005960464,
+          "minRun": 16.600000023841858,
+          "maxRun": 16.69999998807907
+        },
+        "motionFrameP95": {
+          "medianAcrossRuns": 28.250000029802322,
+          "minRun": 19.400000035762787,
+          "maxRun": 37.10000002384186
+        },
+        "motionFrameP99": {
+          "medianAcrossRuns": 57.75000002980232,
+          "minRun": 21.100000023841858,
+          "maxRun": 94.40000003576279
+        },
+        "motionFrameOver50": {
+          "medianAcrossRuns": 36.0,
+          "minRun": 9,
+          "maxRun": 63
+        },
+        "motionFrameOver100": {
+          "medianAcrossRuns": 1.5,
+          "minRun": 0,
+          "maxRun": 3
+        },
+        "restFrameSamples": {
+          "medianAcrossRuns": 563.5,
+          "minRun": 526,
+          "maxRun": 601
+        },
+        "restFrameP50": {
+          "medianAcrossRuns": 16.650000005960464,
+          "minRun": 16.600000023841858,
+          "maxRun": 16.69999998807907
+        },
+        "restFrameP95": {
+          "medianAcrossRuns": 32.44999995827675,
+          "minRun": 17.599999964237213,
+          "maxRun": 47.299999952316284
+        },
+        "restFrameP99": {
+          "medianAcrossRuns": 41.599999994039536,
+          "minRun": 17.69999998807907,
+          "maxRun": 65.5
+        },
+        "restFrameOver50": {
+          "medianAcrossRuns": 11.5,
+          "minRun": 0,
+          "maxRun": 23
+        },
+        "restFrameOver100": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "selectionRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9750290579354389,
+          "minRun": 0.9677572309151257,
+          "maxRun": 0.9823008849557522
+        },
+        "selectionRequestAgeMsP50": {
+          "medianAcrossRuns": 1791.2000000178814,
+          "minRun": 1582.300000011921,
+          "maxRun": 2000.1000000238419
+        },
+        "selectionRequestAgeMsP95": {
+          "medianAcrossRuns": 6247.300000011921,
+          "minRun": 6082.200000047684,
+          "maxRun": 6412.399999976158
+        },
+        "orderingRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9978402116268907,
+          "minRun": 0.9966287399915719,
+          "maxRun": 0.9990516832622096
+        },
+        "orderingRequestAgeMsP50": {
+          "medianAcrossRuns": 106.0,
+          "minRun": 39,
+          "maxRun": 173
+        },
+        "orderingRequestAgeMsP95": {
+          "medianAcrossRuns": 5191.200000017881,
+          "minRun": 5049.400000035763,
+          "maxRun": 5333
+        },
+        "workerTraverseMsP50": {
+          "medianAcrossRuns": 1096.0500000417233,
+          "minRun": 939.9000000357628,
+          "maxRun": 1252.2000000476837
+        },
+        "workerTraverseMsP95": {
+          "medianAcrossRuns": 1326.449999988079,
+          "minRun": 1175,
+          "maxRun": 1477.8999999761581
+        },
+        "workerTraverseMsSamples": {
+          "medianAcrossRuns": 29.5,
+          "minRun": 26,
+          "maxRun": 33
+        },
+        "depthP50": {
+          "medianAcrossRuns": 8.449999988079071,
+          "minRun": 8.399999976158142,
+          "maxRun": 8.5
+        },
+        "depthP95": {
+          "medianAcrossRuns": 91.05000001192093,
+          "minRun": 13,
+          "maxRun": 169.10000002384186
+        },
+        "depthSamples": {
+          "medianAcrossRuns": 958.0,
+          "minRun": 712,
+          "maxRun": 1204
+        },
+        "workerP50": {
+          "medianAcrossRuns": 11.0,
+          "minRun": 9.900000035762787,
+          "maxRun": 12.099999964237213
+        },
+        "workerP95": {
+          "medianAcrossRuns": 13.849999994039536,
+          "minRun": 11.199999988079071,
+          "maxRun": 16.5
+        },
+        "workerSamples": {
+          "medianAcrossRuns": 958.0,
+          "minRun": 712,
+          "maxRun": 1204
+        },
+        "orderingUploadP50": {
+          "medianAcrossRuns": 0.30000001192092896,
+          "minRun": 0.30000001192092896,
+          "maxRun": 0.30000001192092896
+        },
+        "orderingUploadP95": {
+          "medianAcrossRuns": 0.6500000059604645,
+          "minRun": 0.6000000238418579,
+          "maxRun": 0.699999988079071
+        },
+        "orderingUploadSamples": {
+          "medianAcrossRuns": 958.0,
+          "minRun": 712,
+          "maxRun": 1204
+        }
+      }
+    },
+    {
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "runs": 2,
+      "metrics": {
+        "restSettleMs": {
+          "medianAcrossRuns": 1724.3499999940395,
+          "minRun": 1299.2999999523163,
+          "maxRun": 2149.400000035763
+        },
+        "drawn": {
+          "medianAcrossRuns": 2500000.0,
+          "minRun": 2500000,
+          "maxRun": 2500000
+        },
+        "orderingCapacity": {
+          "medianAcrossRuns": 3014656.0,
+          "minRun": 3014656,
+          "maxRun": 3014656
+        },
+        "orderingCpuBytes": {
+          "medianAcrossRuns": 12058624.0,
+          "minRun": 12058624,
+          "maxRun": 12058624
+        },
+        "fullFrameSamples": {
+          "medianAcrossRuns": 2400.0,
+          "minRun": 2400,
+          "maxRun": 2400
+        },
+        "fullFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.69999998807907,
+          "maxRun": 16.69999998807907
+        },
+        "fullFrameP95": {
+          "medianAcrossRuns": 18.099999994039536,
+          "minRun": 18.099999964237213,
+          "maxRun": 18.100000023841858
+        },
+        "fullFrameP99": {
+          "medianAcrossRuns": 18.80000001192093,
+          "minRun": 18.80000001192093,
+          "maxRun": 18.80000001192093
+        },
+        "fullFrameOver50": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "fullFrameOver100": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "motionFrameSamples": {
+          "medianAcrossRuns": 1799.0,
+          "minRun": 1799,
+          "maxRun": 1799
+        },
+        "motionFrameP50": {
+          "medianAcrossRuns": 16.700000017881393,
+          "minRun": 16.69999998807907,
+          "maxRun": 16.700000047683716
+        },
+        "motionFrameP95": {
+          "medianAcrossRuns": 18.25,
+          "minRun": 18.200000047683716,
+          "maxRun": 18.299999952316284
+        },
+        "motionFrameP99": {
+          "medianAcrossRuns": 18.849999994039536,
+          "minRun": 18.80000001192093,
+          "maxRun": 18.899999976158142
+        },
+        "motionFrameOver50": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "motionFrameOver100": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "restFrameSamples": {
+          "medianAcrossRuns": 601.0,
+          "minRun": 601,
+          "maxRun": 601
+        },
+        "restFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.69999998807907,
+          "maxRun": 16.69999998807907
+        },
+        "restFrameP95": {
+          "medianAcrossRuns": 17.450000017881393,
+          "minRun": 17.400000035762787,
+          "maxRun": 17.5
+        },
+        "restFrameP99": {
+          "medianAcrossRuns": 17.69999998807907,
+          "minRun": 17.69999998807907,
+          "maxRun": 17.69999998807907
+        },
+        "restFrameOver50": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "restFrameOver100": {
+          "medianAcrossRuns": 0.0,
+          "minRun": 0,
+          "maxRun": 0
+        },
+        "selectionRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9725114535610162,
+          "minRun": 0.9725114535610162,
+          "maxRun": 0.9725114535610162
+        },
+        "selectionRequestAgeMsP50": {
+          "medianAcrossRuns": 1590.0499999821186,
+          "minRun": 1530.0999999642372,
+          "maxRun": 1650
+        },
+        "selectionRequestAgeMsP95": {
+          "medianAcrossRuns": 7207.499999970198,
+          "minRun": 6798.699999988079,
+          "maxRun": 7616.299999952316
+        },
+        "orderingRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9991670137442732,
+          "minRun": 0.9991670137442732,
+          "maxRun": 0.9991670137442732
+        },
+        "orderingRequestAgeMsP50": {
+          "medianAcrossRuns": 30.649999976158142,
+          "minRun": 28.599999964237213,
+          "maxRun": 32.69999998807907
+        },
+        "orderingRequestAgeMsP95": {
+          "medianAcrossRuns": 6341.049999982119,
+          "minRun": 5916.399999976158,
+          "maxRun": 6765.699999988079
+        },
+        "workerTraverseMsP50": {
+          "medianAcrossRuns": 985.8999999761581,
+          "minRun": 933.8999999761581,
+          "maxRun": 1037.8999999761581
+        },
+        "workerTraverseMsP95": {
+          "medianAcrossRuns": 1059.800000011921,
+          "minRun": 1008.1000000238419,
+          "maxRun": 1111.5
+        },
+        "workerTraverseMsSamples": {
+          "medianAcrossRuns": 32.0,
+          "minRun": 31,
+          "maxRun": 33
+        },
+        "depthP50": {
+          "medianAcrossRuns": 7.8499999940395355,
+          "minRun": 7.800000011920929,
+          "maxRun": 7.899999976158142
+        },
+        "depthP95": {
+          "medianAcrossRuns": 12.400000005960464,
+          "minRun": 12.300000011920929,
+          "maxRun": 12.5
+        },
+        "depthSamples": {
+          "medianAcrossRuns": 1529.5,
+          "minRun": 1517,
+          "maxRun": 1542
+        },
+        "workerP50": {
+          "medianAcrossRuns": 9.050000011920929,
+          "minRun": 9,
+          "maxRun": 9.100000023841858
+        },
+        "workerP95": {
+          "medianAcrossRuns": 9.849999994039536,
+          "minRun": 9.699999988079071,
+          "maxRun": 10
+        },
+        "workerSamples": {
+          "medianAcrossRuns": 1529.5,
+          "minRun": 1517,
+          "maxRun": 1542
+        },
+        "orderingUploadP50": {
+          "medianAcrossRuns": 0.19999998807907104,
+          "minRun": 0.19999998807907104,
+          "maxRun": 0.19999998807907104
+        },
+        "orderingUploadP95": {
+          "medianAcrossRuns": 0.4000000059604645,
+          "minRun": 0.3999999761581421,
+          "maxRun": 0.40000003576278687
+        },
+        "orderingUploadSamples": {
+          "medianAcrossRuns": 1529.5,
+          "minRun": 1517,
+          "maxRun": 1542
+        }
+      }
+    }
+  ]
+}

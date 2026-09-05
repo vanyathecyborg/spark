@@ -1,0 +1,127 @@
+{
+  "recordedAt": "2026-09-05T20:02:11.816Z",
+  "results": [
+    {
+      "name": "pr420-unmodified",
+      "before": {
+        "hash": 899043627,
+        "errorBefore": 1281,
+        "error": 0,
+        "allocations": 0,
+        "reuses": 0,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "after": {
+        "hash": 2435743173,
+        "errorBefore": 1282,
+        "error": 0,
+        "allocations": 0,
+        "reuses": 0,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "orderingCpuMatchesGpu": true,
+      "orderingRestored": true,
+      "restorationPassed": false,
+      "warnings": [
+        "WebGL: INVALID_VALUE: texSubImage2D: no pixels",
+        "[.WebGL-0x11c000e7400] GL_INVALID_OPERATION: glDrawElementsInstanced: Mismatch between texture format and sampler type (signed/unsigned/float/shadow)."
+      ],
+      "adapter": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "browser": "152.0.7977.77",
+      "errors": []
+    },
+    {
+      "name": "upstream-main",
+      "before": {
+        "hash": 899043627,
+        "errorBefore": 0,
+        "error": 0,
+        "allocations": 0,
+        "reuses": 0,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "after": {
+        "hash": 2435743173,
+        "errorBefore": 1282,
+        "error": 0,
+        "allocations": 0,
+        "reuses": 0,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "orderingCpuMatchesGpu": false,
+      "orderingRestored": false,
+      "restorationPassed": false,
+      "warnings": [
+        "[.WebGL-0x134000e0200] GL_INVALID_OPERATION: glDrawElementsInstanced: Mismatch between texture format and sampler type (signed/unsigned/float/shadow)."
+      ],
+      "adapter": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "browser": "152.0.7977.77",
+      "errors": []
+    },
+    {
+      "name": "upstream-plus-pool",
+      "before": {
+        "hash": 899043627,
+        "errorBefore": 0,
+        "error": 0,
+        "allocations": 2,
+        "reuses": 19,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "after": {
+        "hash": 2435743173,
+        "errorBefore": 1282,
+        "error": 0,
+        "allocations": 2,
+        "reuses": 19,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "orderingCpuMatchesGpu": true,
+      "orderingRestored": true,
+      "restorationPassed": false,
+      "warnings": [
+        "[.WebGL-0x104000e5c00] GL_INVALID_OPERATION: glDrawElementsInstanced: Mismatch between texture format and sampler type (signed/unsigned/float/shadow)."
+      ],
+      "adapter": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "browser": "152.0.7977.77",
+      "errors": []
+    },
+    {
+      "name": "pr420-plus-pool",
+      "before": {
+        "hash": 899043627,
+        "errorBefore": 1281,
+        "error": 0,
+        "allocations": 3,
+        "reuses": 18,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "after": {
+        "hash": 2435743173,
+        "errorBefore": 1282,
+        "error": 0,
+        "allocations": 3,
+        "reuses": 18,
+        "active": 1024,
+        "cpuOrderingAttached": true
+      },
+      "orderingCpuMatchesGpu": true,
+      "orderingRestored": true,
+      "restorationPassed": false,
+      "warnings": [
+        "WebGL: INVALID_VALUE: texSubImage2D: no pixels",
+        "[.WebGL-0x124000e3200] GL_INVALID_OPERATION: glDrawElementsInstanced: Mismatch between texture format and sampler type (signed/unsigned/float/shadow)."
+      ],
+      "adapter": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "browser": "152.0.7977.77",
+      "errors": []
+    }
+  ]
+}

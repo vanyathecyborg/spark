@@ -1,0 +1,936 @@
+{
+  "manifest": {
+    "protocol": "spark-orbit-v2",
+    "count": 3000000,
+    "repetitions": 5,
+    "configurations": [
+      [
+        2500000,
+        1920,
+        1080
+      ]
+    ],
+    "variants": [
+      {
+        "name": "upstream",
+        "port": 5320
+      },
+      {
+        "name": "ordering",
+        "port": 5321
+      }
+    ],
+    "headless": true,
+    "hardware": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M4 Max"
+    },
+    "startedAt": "2026-09-05T20:17:14.486Z",
+    "timing": "rAF and draw-submission intervals; GPU completion unavailable",
+    "instrumentation": "bounded benchmark events",
+    "otherApplications": "Existing user applications were left unchanged. Only one benchmark browser runs at a time."
+  },
+  "runs": [
+    {
+      "id": "upstream-2500000-1920x1080-r1",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 1,
+      "loadBefore": [
+        8.8642578125,
+        18.15966796875,
+        18.69580078125
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "upstream-2500000-1920x1080-r1-spark-webgl-lod-debug-2026-09-05T20-18-11-183Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40015.39999997616,
+        "renderRequests": 2395,
+        "submittedFrames": 2395,
+        "raf": {
+          "type": "Object",
+          "count": 2394,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999995634,
+          "p99": 16.80000000000291,
+          "max": 33.30000000000291,
+          "mean": 16.707769423558954,
+          "over50": 0,
+          "over100": 0
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 2394,
+          "p50": 16.69999998807907,
+          "p95": 19.19999998807907,
+          "p99": 31.5,
+          "max": 63.60000002384186,
+          "mean": 16.707769423573836,
+          "over50": 6,
+          "over100": 0
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 1315.4000000357628,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "722255799e26db7cc41c2649638b0aa5214624c6",
+        "sourceSha256": "f077e88cd33144a68206e1c4a0f4880ecd0840720098327c4ccd5afe1d018721",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        10.36376953125,
+        17.00732421875,
+        18.2333984375
+      ],
+      "errors": []
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r1",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 1,
+      "loadBefore": [
+        10.36376953125,
+        17.00732421875,
+        18.2333984375
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "ordering-2500000-1920x1080-r1-spark-webgl-lod-debug-2026-09-05T20-19-08-145Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40014.59999996424,
+        "renderRequests": 1534,
+        "submittedFrames": 1534,
+        "raf": {
+          "type": "Object",
+          "count": 1533,
+          "p50": 16.700000000000728,
+          "p95": 83.40000000000146,
+          "p99": 133.29999999999563,
+          "max": 200,
+          "mean": 26.080691454664056,
+          "over50": 173,
+          "over100": 32
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 1533,
+          "p50": 16.69999998807907,
+          "p95": 92.60000002384186,
+          "p99": 155.60000002384186,
+          "max": 228.19999998807907,
+          "mean": 26.090476190468415,
+          "over50": 200,
+          "over100": 62
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 1733,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "82d463a0ffe012134782699bfbb4854ca86c6bd5",
+        "sourceSha256": "cb8fef3bf67d3130fc563d49be1a3030fb1fd62077fef0ffd8af367801874221",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        14.232421875,
+        16.955078125,
+        18.13623046875
+      ],
+      "errors": []
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r2",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 2,
+      "loadBefore": [
+        14.232421875,
+        16.955078125,
+        18.13623046875
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "ordering-2500000-1920x1080-r2-spark-webgl-lod-debug-2026-09-05T20-20-04-521Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40014.89999997616,
+        "renderRequests": 2394,
+        "submittedFrames": 2394,
+        "raf": {
+          "type": "Object",
+          "count": 2393,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999995634,
+          "p99": 16.80000000000291,
+          "max": 33.39999999999782,
+          "mean": 16.714751358127906,
+          "over50": 0,
+          "over100": 0
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 2393,
+          "p50": 16.69999998807907,
+          "p95": 21.399999976158142,
+          "p99": 35,
+          "max": 63,
+          "mean": 16.714625992488024,
+          "over50": 5,
+          "over100": 0
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 3398.699999988079,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "82d463a0ffe012134782699bfbb4854ca86c6bd5",
+        "sourceSha256": "cb8fef3bf67d3130fc563d49be1a3030fb1fd62077fef0ffd8af367801874221",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        11.52099609375,
+        15.67626953125,
+        17.58056640625
+      ],
+      "errors": []
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r2",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 2,
+      "loadBefore": [
+        11.52099609375,
+        15.67626953125,
+        17.58056640625
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "upstream-2500000-1920x1080-r2-spark-webgl-lod-debug-2026-09-05T20-21-02-202Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40015.69999998808,
+        "renderRequests": 1361,
+        "submittedFrames": 1361,
+        "raf": {
+          "type": "Object",
+          "count": 1360,
+          "p50": 16.700000000000728,
+          "p95": 100,
+          "p99": 133.3000000000029,
+          "max": 216.6999999999971,
+          "mean": 29.410588235294135,
+          "over50": 193,
+          "over100": 60
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 1360,
+          "p50": 16.69999998807907,
+          "p95": 125.19999998807907,
+          "p99": 173.19999998807907,
+          "max": 230.89999997615814,
+          "mean": 29.41029411764706,
+          "over50": 226,
+          "over100": 89
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 2415.699999988079,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "722255799e26db7cc41c2649638b0aa5214624c6",
+        "sourceSha256": "f077e88cd33144a68206e1c4a0f4880ecd0840720098327c4ccd5afe1d018721",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        9.8515625,
+        14.55078125,
+        17.03515625
+      ],
+      "errors": []
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r3",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 3,
+      "loadBefore": [
+        9.8515625,
+        14.55078125,
+        17.03515625
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "upstream-2500000-1920x1080-r3-spark-webgl-lod-debug-2026-09-05T20-21-57-157Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40015.90000003576,
+        "renderRequests": 2401,
+        "submittedFrames": 2401,
+        "raf": {
+          "type": "Object",
+          "count": 2400,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999995634,
+          "p99": 16.80000000000291,
+          "max": 16.80000000000291,
+          "mean": 16.66600000000002,
+          "over50": 0,
+          "over100": 0
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 2400,
+          "p50": 16.69999998807907,
+          "p95": 18.100000023841858,
+          "p99": 21,
+          "max": 42.5,
+          "mean": 16.665666666651767,
+          "over50": 0,
+          "over100": 0
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 3047.699999988079,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "722255799e26db7cc41c2649638b0aa5214624c6",
+        "sourceSha256": "f077e88cd33144a68206e1c4a0f4880ecd0840720098327c4ccd5afe1d018721",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        8.4599609375,
+        13.49169921875,
+        16.4912109375
+      ],
+      "errors": []
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r3",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 3,
+      "loadBefore": [
+        8.4599609375,
+        13.49169921875,
+        16.4912109375
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "ordering-2500000-1920x1080-r3-spark-webgl-lod-debug-2026-09-05T20-22-54-402Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40028,
+        "renderRequests": 1405,
+        "submittedFrames": 1405,
+        "raf": {
+          "type": "Object",
+          "count": 1404,
+          "p50": 16.700000000000728,
+          "p95": 83.40000000000146,
+          "p99": 116.69999999999709,
+          "max": 200,
+          "mean": 28.500783475783468,
+          "over50": 204,
+          "over100": 33
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 1404,
+          "p50": 16.69999998807907,
+          "p95": 92.5,
+          "p99": 147.89999997615814,
+          "max": 226.19999998807907,
+          "mean": 28.49928774928775,
+          "over50": 259,
+          "over100": 64
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 2000.4000000357628,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "82d463a0ffe012134782699bfbb4854ca86c6bd5",
+        "sourceSha256": "cb8fef3bf67d3130fc563d49be1a3030fb1fd62077fef0ffd8af367801874221",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        8.35986328125,
+        12.6748046875,
+        16.00146484375
+      ],
+      "errors": []
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r4",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 4,
+      "loadBefore": [
+        8.35986328125,
+        12.6748046875,
+        16.00146484375
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "ordering-2500000-1920x1080-r4-spark-webgl-lod-debug-2026-09-05T20-23-49-956Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40016.10000002384,
+        "renderRequests": 2383,
+        "submittedFrames": 2383,
+        "raf": {
+          "type": "Object",
+          "count": 2382,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999995634,
+          "p99": 16.80000000000291,
+          "max": 50,
+          "mean": 16.791897565071395,
+          "over50": 0,
+          "over100": 0
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 2382,
+          "p50": 16.69999998807907,
+          "p95": 17.700000047683716,
+          "p99": 26.599999964237213,
+          "max": 74.5,
+          "mean": 16.792065491178874,
+          "over50": 13,
+          "over100": 0
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 3132.899999976158,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "82d463a0ffe012134782699bfbb4854ca86c6bd5",
+        "sourceSha256": "cb8fef3bf67d3130fc563d49be1a3030fb1fd62077fef0ffd8af367801874221",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        12.294921875,
+        13.34912109375,
+        16.0615234375
+      ],
+      "errors": []
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r4",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 4,
+      "loadBefore": [
+        12.294921875,
+        13.34912109375,
+        16.0615234375
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "upstream-2500000-1920x1080-r4-spark-webgl-lod-debug-2026-09-05T20-24-45-737Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40001.39999997616,
+        "renderRequests": 1854,
+        "submittedFrames": 1854,
+        "raf": {
+          "type": "Object",
+          "count": 1853,
+          "p50": 16.69999999999709,
+          "p95": 50.099999999998545,
+          "p99": 100.10000000000582,
+          "max": 166.70000000000073,
+          "mean": 21.58575283324337,
+          "over50": 95,
+          "over100": 24
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 1853,
+          "p50": 16.69999998807907,
+          "p95": 69.69999998807907,
+          "p99": 126.30000001192093,
+          "max": 181.80000001192093,
+          "mean": 21.57884511600876,
+          "over50": 123,
+          "over100": 63
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 1319.300000011921,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "722255799e26db7cc41c2649638b0aa5214624c6",
+        "sourceSha256": "f077e88cd33144a68206e1c4a0f4880ecd0840720098327c4ccd5afe1d018721",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        9.025390625,
+        12.18310546875,
+        15.4375
+      ],
+      "errors": []
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r5",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 5,
+      "loadBefore": [
+        9.025390625,
+        12.18310546875,
+        15.4375
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "upstream-2500000-1920x1080-r5-spark-webgl-lod-debug-2026-09-05T20-25-42-485Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40016.69999998808,
+        "renderRequests": 2398,
+        "submittedFrames": 2398,
+        "raf": {
+          "type": "Object",
+          "count": 2397,
+          "p50": 16.69999999999709,
+          "p95": 16.700000000004366,
+          "p99": 16.80000000000291,
+          "max": 33.39999999999782,
+          "mean": 16.686858573216554,
+          "over50": 0,
+          "over100": 0
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 2397,
+          "p50": 16.69999998807907,
+          "p95": 18.400000035762787,
+          "p99": 21.5,
+          "max": 61.5,
+          "mean": 16.686942010831974,
+          "over50": 3,
+          "over100": 0
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 2614.5,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "722255799e26db7cc41c2649638b0aa5214624c6",
+        "sourceSha256": "f077e88cd33144a68206e1c4a0f4880ecd0840720098327c4ccd5afe1d018721",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        9.22314453125,
+        11.814453125,
+        15.10107421875
+      ],
+      "errors": []
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r5",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 5,
+      "loadBefore": [
+        9.22314453125,
+        11.814453125,
+        15.10107421875
+      ],
+      "browser": "152.0.7977.77",
+      "valid": true,
+      "file": "ordering-2500000-1920x1080-r5-spark-webgl-lod-debug-2026-09-05T20-26-37-504Z.json",
+      "metrics": {
+        "type": "Object",
+        "version": 1,
+        "durationMs": 40012.60000002384,
+        "renderRequests": 2046,
+        "submittedFrames": 2046,
+        "raf": {
+          "type": "Object",
+          "count": 2045,
+          "p50": 16.69999999999709,
+          "p95": 33.400000000001455,
+          "p99": 83.30000000000291,
+          "max": 116.70000000000437,
+          "mean": 19.551002444987745,
+          "over50": 79,
+          "over100": 5
+        },
+        "submitted": {
+          "type": "Object",
+          "count": 2045,
+          "p50": 16.69999998807907,
+          "p95": 42.39999997615814,
+          "p99": 86.30000001192093,
+          "max": 195.9000000357628,
+          "mean": 19.556968215158925,
+          "over50": 92,
+          "over100": 13
+        },
+        "gpuCompletion": "unavailable",
+        "failures": [],
+        "rawSamples": "capture-frame-samples events; intervals exclude the first observation"
+      },
+      "restSettleMs": 2498.899999976158,
+      "asset": {
+        "id": "seeded-courtyard-v1",
+        "kind": "synthetic",
+        "seed": 20260906,
+        "count": 3000000,
+        "license": "MIT",
+        "attribution": "Ivan Kalinin",
+        "footageAndRedistribution": "permitted by original generator license",
+        "sourceSha256": "6374c4b7110d5e61aadea70b62285d8a45c656239ec66ab7160e3904a498e9fd",
+        "lodSha256": "b3535b121ab76b65a8316cd269bd9fe9c63c1d4f5a095676f3fd31d53f4f2457",
+        "lodNodeCount": 4400790
+      },
+      "identity": {
+        "type": "Object",
+        "revision": "82d463a0ffe012134782699bfbb4854ca86c6bd5",
+        "sourceSha256": "cb8fef3bf67d3130fc563d49be1a3030fb1fd62077fef0ffd8af367801874221",
+        "wasmSha256": "a61e0809497ca580e72098140856450ba1843d864c61c1fa6bb76d4d8c881404",
+        "dependencyLockSha256": "2b011531781efa589e5671e9c477225006f480d013e35dc0c0795b8b5ca1fec9",
+        "harnessSha256": "4804e780dad738d80148005594ec0632424468333e5b57a0c64384caa6b9c9f2",
+        "workingTreeDirty": true,
+        "node": "v23.10.0"
+      },
+      "environment": {
+        "type": "Object",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+        "browserHardware": {
+          "type": "Object",
+          "vendor": "Google Inc. (Apple)",
+          "device": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)"
+        },
+        "threeRevision": "180",
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1
+      },
+      "loadAfter": [
+        11.63134765625,
+        12.07177734375,
+        14.9892578125
+      ],
+      "errors": []
+    }
+  ]
+}

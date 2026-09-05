@@ -1,0 +1,33 @@
+{
+  "initial": {
+    "ready": true,
+    "allocations": 2,
+    "reuses": 19,
+    "active": 1024,
+    "cpuOrderingAttached": true,
+    "errors": []
+  },
+  "before": {
+    "hash": 899043627,
+    "errorBefore": 0,
+    "error": 0,
+    "allocations": 2,
+    "reuses": 19,
+    "active": 1024,
+    "cpuOrderingAttached": true
+  },
+  "after": {
+    "hash": 2435743173,
+    "errorBefore": 1282,
+    "error": 0,
+    "allocations": 2,
+    "reuses": 19,
+    "active": 1024,
+    "cpuOrderingAttached": true
+  },
+  "warnings": [
+    "[.WebGL-0x104000e5c00] GL_INVALID_OPERATION: glDrawElementsInstanced: Mismatch between texture format and sampler type (signed/unsigned/float/shadow)."
+  ],
+  "errors": [],
+  "internal": []
+}

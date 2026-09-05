@@ -1,0 +1,916 @@
+{
+  "aggregation": "Median of each metric across whole runs; min/max show run variability. No run is discarded for unfavorable results. Frame phases use interval endpoint time.",
+  "invalidRuns": [],
+  "runs": [
+    {
+      "id": "upstream-2500000-1920x1080-r1",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 1,
+      "file": "upstream-2500000-1920x1080-r1-spark-webgl-lod-debug-2026-09-05T20-18-11-183Z.json",
+      "restSettleMs": 1315.4000000357628,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2394,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 19.19999998807907,
+      "fullFrameP99": 31.5,
+      "fullFrameOver50": 6,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1791,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 19.400000035762787,
+      "motionFrameP99": 35,
+      "motionFrameOver50": 6,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 603,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.30000001192093,
+      "restFrameP99": 17.69999998807907,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9657620041753654,
+      "selectionRequestAgeMsP50": 2097,
+      "selectionRequestAgeMsP95": 7799.5,
+      "orderingRequestAgeMsKnownFraction": 0.998329853862213,
+      "orderingRequestAgeMsP50": 51.89999997615814,
+      "orderingRequestAgeMsP95": 6766.899999976158,
+      "workerTraverseMsP50": 1254.5,
+      "workerTraverseMsP95": 1516.6000000238419,
+      "workerTraverseMsSamples": 24,
+      "depthP50": 13.600000023841858,
+      "depthP95": 45.19999998807907,
+      "depthSamples": 943,
+      "workerP50": 10.800000011920929,
+      "workerP95": 14,
+      "workerSamples": 943,
+      "orderingUploadP50": 0.5,
+      "orderingUploadP95": 1,
+      "orderingUploadSamples": 943
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r1",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 1,
+      "file": "ordering-2500000-1920x1080-r1-spark-webgl-lod-debug-2026-09-05T20-19-08-145Z.json",
+      "restSettleMs": 1733,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 1533,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 92.60000002384186,
+      "fullFrameP99": 155.60000002384186,
+      "fullFrameOver50": 200,
+      "fullFrameOver100": 62,
+      "motionFrameSamples": 1236,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 86.90000003576279,
+      "motionFrameP99": 159.69999998807907,
+      "motionFrameOver50": 128,
+      "motionFrameOver100": 53,
+      "restFrameSamples": 297,
+      "restFrameP50": 16.80000001192093,
+      "restFrameP95": 93.5,
+      "restFrameP99": 125.90000003576279,
+      "restFrameOver50": 72,
+      "restFrameOver100": 9,
+      "selectionRequestAgeMsKnownFraction": 0.9485006518904824,
+      "selectionRequestAgeMsP50": 1873.1000000238419,
+      "selectionRequestAgeMsP95": 6847.300000011921,
+      "orderingRequestAgeMsKnownFraction": 0.9980443285528031,
+      "orderingRequestAgeMsP50": 250.39999997615814,
+      "orderingRequestAgeMsP95": 5740.399999976158,
+      "workerTraverseMsP50": 1061.800000011921,
+      "workerTraverseMsP95": 1468.5,
+      "workerTraverseMsSamples": 27,
+      "depthP50": 22,
+      "depthP95": 324.4000000357628,
+      "depthSamples": 360,
+      "workerP50": 11.199999988079071,
+      "workerP95": 14.800000011920929,
+      "workerSamples": 360,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 0.699999988079071,
+      "orderingUploadSamples": 360
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r2",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 2,
+      "file": "ordering-2500000-1920x1080-r2-spark-webgl-lod-debug-2026-09-05T20-20-04-521Z.json",
+      "restSettleMs": 3398.699999988079,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2393,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 21.399999976158142,
+      "fullFrameP99": 35,
+      "fullFrameOver50": 5,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1792,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 23.69999998807907,
+      "motionFrameP99": 40.69999998807907,
+      "motionFrameOver50": 4,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.200000047683716,
+      "restFrameP99": 17.69999998807907,
+      "restFrameOver50": 1,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9711779448621554,
+      "selectionRequestAgeMsP50": 1746.800000011921,
+      "selectionRequestAgeMsP95": 6149.199999988079,
+      "orderingRequestAgeMsKnownFraction": 0.9979114452798663,
+      "orderingRequestAgeMsP50": 83.40000003576279,
+      "orderingRequestAgeMsP95": 4682.300000011921,
+      "workerTraverseMsP50": 1068.0999999642372,
+      "workerTraverseMsP95": 1404.199999988079,
+      "workerTraverseMsSamples": 30,
+      "depthP50": 26.100000023841858,
+      "depthP95": 79,
+      "depthSamples": 666,
+      "workerP50": 9.5,
+      "workerP95": 10.600000023841858,
+      "workerSamples": 666,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 0.5999999642372131,
+      "orderingUploadSamples": 666
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r2",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 2,
+      "file": "upstream-2500000-1920x1080-r2-spark-webgl-lod-debug-2026-09-05T20-21-02-202Z.json",
+      "restSettleMs": 2415.699999988079,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 1360,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 125.19999998807907,
+      "fullFrameP99": 173.19999998807907,
+      "fullFrameOver50": 226,
+      "fullFrameOver100": 89,
+      "motionFrameSamples": 929,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 134.39999997615814,
+      "motionFrameP99": 197.80000001192093,
+      "motionFrameOver50": 182,
+      "motionFrameOver100": 83,
+      "restFrameSamples": 431,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 86.79999995231628,
+      "restFrameP99": 102.79999995231628,
+      "restFrameOver50": 44,
+      "restFrameOver100": 6,
+      "selectionRequestAgeMsKnownFraction": 0.9551800146950772,
+      "selectionRequestAgeMsP50": 1863.800000011921,
+      "selectionRequestAgeMsP95": 7842.899999976158,
+      "orderingRequestAgeMsKnownFraction": 0.9948567229977957,
+      "orderingRequestAgeMsP50": 479.30000001192093,
+      "orderingRequestAgeMsP95": 6800,
+      "workerTraverseMsP50": 1061.0999999642372,
+      "workerTraverseMsP95": 1273.9000000357628,
+      "workerTraverseMsSamples": 28,
+      "depthP50": 248.79999995231628,
+      "depthP95": 384.69999998807907,
+      "depthSamples": 138,
+      "workerP50": 12.5,
+      "workerP95": 17.099999964237213,
+      "workerSamples": 138,
+      "orderingUploadP50": 0.6000000238418579,
+      "orderingUploadP95": 4.300000011920929,
+      "orderingUploadSamples": 138
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r3",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 3,
+      "file": "upstream-2500000-1920x1080-r3-spark-webgl-lod-debug-2026-09-05T20-21-57-157Z.json",
+      "restSettleMs": 3047.699999988079,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2400,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 18.100000023841858,
+      "fullFrameP99": 21,
+      "fullFrameOver50": 0,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1799,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 18.69999998807907,
+      "motionFrameP99": 25.19999998807907,
+      "motionFrameOver50": 0,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.5,
+      "restFrameP99": 17.80000001192093,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9716784673052895,
+      "selectionRequestAgeMsP50": 1797.3999999761581,
+      "selectionRequestAgeMsP95": 6084.100000023842,
+      "orderingRequestAgeMsKnownFraction": 0.9987505206164098,
+      "orderingRequestAgeMsP50": 60.09999996423721,
+      "orderingRequestAgeMsP95": 5034,
+      "workerTraverseMsP50": 1129.300000011921,
+      "workerTraverseMsP95": 1264.1000000238419,
+      "workerTraverseMsSamples": 29,
+      "depthP50": 21.69999998807907,
+      "depthP95": 39.60000002384186,
+      "depthSamples": 851,
+      "workerP50": 10.100000023841858,
+      "workerP95": 11.199999988079071,
+      "workerSamples": 851,
+      "orderingUploadP50": 0.5,
+      "orderingUploadP95": 1.300000011920929,
+      "orderingUploadSamples": 851
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r3",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 3,
+      "file": "ordering-2500000-1920x1080-r3-spark-webgl-lod-debug-2026-09-05T20-22-54-402Z.json",
+      "restSettleMs": 2000.4000000357628,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 1404,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 92.5,
+      "fullFrameP99": 147.89999997615814,
+      "fullFrameOver50": 259,
+      "fullFrameOver100": 64,
+      "motionFrameSamples": 1085,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 111,
+      "motionFrameP99": 151.4000000357628,
+      "motionFrameOver50": 175,
+      "motionFrameOver100": 61,
+      "restFrameSamples": 319,
+      "restFrameP50": 16.600000023841858,
+      "restFrameP95": 82.19999998807907,
+      "restFrameP99": 97.89999997615814,
+      "restFrameOver50": 84,
+      "restFrameOver100": 3,
+      "selectionRequestAgeMsKnownFraction": 0.9188612099644128,
+      "selectionRequestAgeMsP50": 1769.300000011921,
+      "selectionRequestAgeMsP95": 7076.699999988079,
+      "orderingRequestAgeMsKnownFraction": 0.9928825622775801,
+      "orderingRequestAgeMsP50": 373.19999998807907,
+      "orderingRequestAgeMsP95": 6001.900000035763,
+      "workerTraverseMsP50": 905.9000000357628,
+      "workerTraverseMsP95": 1917.2999999523163,
+      "workerTraverseMsSamples": 28,
+      "depthP50": 204.89999997615814,
+      "depthP95": 357.69999998807907,
+      "depthSamples": 146,
+      "workerP50": 11.199999988079071,
+      "workerP95": 22.69999998807907,
+      "workerSamples": 146,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 6.400000035762787,
+      "orderingUploadSamples": 146
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r4",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 4,
+      "file": "ordering-2500000-1920x1080-r4-spark-webgl-lod-debug-2026-09-05T20-23-49-956Z.json",
+      "restSettleMs": 3132.899999976158,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2382,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 17.700000047683716,
+      "fullFrameP99": 26.599999964237213,
+      "fullFrameOver50": 13,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1781,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 18.19999998807907,
+      "motionFrameP99": 35.60000002384186,
+      "motionFrameOver50": 13,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17,
+      "restFrameP99": 17.600000023841858,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9693663449433487,
+      "selectionRequestAgeMsP50": 1932.699999988079,
+      "selectionRequestAgeMsP95": 6333.199999988079,
+      "orderingRequestAgeMsKnownFraction": 0.9987410826689047,
+      "orderingRequestAgeMsP50": 58.09999996423721,
+      "orderingRequestAgeMsP95": 4933.400000035763,
+      "workerTraverseMsP50": 1178.2000000476837,
+      "workerTraverseMsP95": 1381,
+      "workerTraverseMsSamples": 27,
+      "depthP50": 18.80000001192093,
+      "depthP95": 33.5,
+      "depthSamples": 880,
+      "workerP50": 9.699999988079071,
+      "workerP95": 11.300000011920929,
+      "workerSamples": 880,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 0.6000000238418579,
+      "orderingUploadSamples": 880
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r4",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 4,
+      "file": "upstream-2500000-1920x1080-r4-spark-webgl-lod-debug-2026-09-05T20-24-45-737Z.json",
+      "restSettleMs": 1319.300000011921,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 1853,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 69.69999998807907,
+      "fullFrameP99": 126.30000001192093,
+      "fullFrameOver50": 123,
+      "fullFrameOver100": 63,
+      "motionFrameSamples": 1252,
+      "motionFrameP50": 16.600000023841858,
+      "motionFrameP95": 102.10000002384186,
+      "motionFrameP99": 128.30000001192093,
+      "motionFrameOver50": 123,
+      "motionFrameOver100": 63,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.80000001192093,
+      "restFrameP99": 18.399999976158142,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9778856526429341,
+      "selectionRequestAgeMsP50": 1778.5,
+      "selectionRequestAgeMsP95": 8384.599999964237,
+      "orderingRequestAgeMsKnownFraction": 0.9946062567421791,
+      "orderingRequestAgeMsP50": 339.10000002384186,
+      "orderingRequestAgeMsP95": 7199.899999976158,
+      "workerTraverseMsP50": 904.6999999880791,
+      "workerTraverseMsP95": 1326.8999999761581,
+      "workerTraverseMsSamples": 30,
+      "depthP50": 18.30000001192093,
+      "depthP95": 275.30000001192093,
+      "depthSamples": 374,
+      "workerP50": 10.5,
+      "workerP95": 12.5,
+      "workerSamples": 374,
+      "orderingUploadP50": 0.40000003576278687,
+      "orderingUploadP95": 1,
+      "orderingUploadSamples": 374
+    },
+    {
+      "id": "upstream-2500000-1920x1080-r5",
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 5,
+      "file": "upstream-2500000-1920x1080-r5-spark-webgl-lod-debug-2026-09-05T20-25-42-485Z.json",
+      "restSettleMs": 2614.5,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2397,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 18.400000035762787,
+      "fullFrameP99": 21.5,
+      "fullFrameOver50": 3,
+      "fullFrameOver100": 0,
+      "motionFrameSamples": 1796,
+      "motionFrameP50": 16.69999998807907,
+      "motionFrameP95": 18.80000001192093,
+      "motionFrameP99": 24.80000001192093,
+      "motionFrameOver50": 3,
+      "motionFrameOver100": 0,
+      "restFrameSamples": 601,
+      "restFrameP50": 16.69999998807907,
+      "restFrameP95": 17.900000035762787,
+      "restFrameP99": 18.5,
+      "restFrameOver50": 0,
+      "restFrameOver100": 0,
+      "selectionRequestAgeMsKnownFraction": 0.9674728940783986,
+      "selectionRequestAgeMsP50": 2066.699999988079,
+      "selectionRequestAgeMsP95": 6517.199999988079,
+      "orderingRequestAgeMsKnownFraction": 0.9970809007506255,
+      "orderingRequestAgeMsP50": 56.60000002384186,
+      "orderingRequestAgeMsP95": 5449.799999952316,
+      "workerTraverseMsP50": 1304.2999999523163,
+      "workerTraverseMsP95": 1494.699999988079,
+      "workerTraverseMsSamples": 25,
+      "depthP50": 18.30000001192093,
+      "depthP95": 36,
+      "depthSamples": 895,
+      "workerP50": 10.599999964237213,
+      "workerP95": 12.900000035762787,
+      "workerSamples": 895,
+      "orderingUploadP50": 0.5,
+      "orderingUploadP95": 1.100000023841858,
+      "orderingUploadSamples": 895
+    },
+    {
+      "id": "ordering-2500000-1920x1080-r5",
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "repetition": 5,
+      "file": "ordering-2500000-1920x1080-r5-spark-webgl-lod-debug-2026-09-05T20-26-37-504Z.json",
+      "restSettleMs": 2498.899999976158,
+      "drawn": 2500000,
+      "orderingCapacity": 3014656,
+      "orderingCpuBytes": 12058624,
+      "fullFrameSamples": 2045,
+      "fullFrameP50": 16.69999998807907,
+      "fullFrameP95": 42.39999997615814,
+      "fullFrameP99": 86.30000001192093,
+      "fullFrameOver50": 92,
+      "fullFrameOver100": 13,
+      "motionFrameSamples": 1700,
+      "motionFrameP50": 16.600000023841858,
+      "motionFrameP95": 20.69999998807907,
+      "motionFrameP99": 53.700000047683716,
+      "motionFrameOver50": 21,
+      "motionFrameOver100": 11,
+      "restFrameSamples": 345,
+      "restFrameP50": 16.899999976158142,
+      "restFrameP95": 80.80000001192093,
+      "restFrameP99": 92,
+      "restFrameOver50": 71,
+      "restFrameOver100": 2,
+      "selectionRequestAgeMsKnownFraction": 0.9589442815249267,
+      "selectionRequestAgeMsP50": 2082.899999976158,
+      "selectionRequestAgeMsP95": 6024.5,
+      "orderingRequestAgeMsKnownFraction": 0.9975562072336266,
+      "orderingRequestAgeMsP50": 50.80000001192093,
+      "orderingRequestAgeMsP95": 4799.600000023842,
+      "workerTraverseMsP50": 1310.8999999761581,
+      "workerTraverseMsP95": 1603.3999999761581,
+      "workerTraverseMsSamples": 24,
+      "depthP50": 14.200000047683716,
+      "depthP95": 90.80000001192093,
+      "depthSamples": 840,
+      "workerP50": 10.199999988079071,
+      "workerP95": 13.799999952316284,
+      "workerSamples": 840,
+      "orderingUploadP50": 0.30000001192092896,
+      "orderingUploadP95": 0.699999988079071,
+      "orderingUploadSamples": 840
+    }
+  ],
+  "groups": [
+    {
+      "variant": "upstream",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "runs": 5,
+      "metrics": {
+        "restSettleMs": {
+          "medianAcrossRuns": 2415.699999988079,
+          "minRun": 1315.4000000357628,
+          "maxRun": 3047.699999988079
+        },
+        "drawn": {
+          "medianAcrossRuns": 2500000,
+          "minRun": 2500000,
+          "maxRun": 2500000
+        },
+        "orderingCapacity": {
+          "medianAcrossRuns": 3014656,
+          "minRun": 3014656,
+          "maxRun": 3014656
+        },
+        "orderingCpuBytes": {
+          "medianAcrossRuns": 12058624,
+          "minRun": 12058624,
+          "maxRun": 12058624
+        },
+        "fullFrameSamples": {
+          "medianAcrossRuns": 2394,
+          "minRun": 1360,
+          "maxRun": 2400
+        },
+        "fullFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.69999998807907,
+          "maxRun": 16.69999998807907
+        },
+        "fullFrameP95": {
+          "medianAcrossRuns": 19.19999998807907,
+          "minRun": 18.100000023841858,
+          "maxRun": 125.19999998807907
+        },
+        "fullFrameP99": {
+          "medianAcrossRuns": 31.5,
+          "minRun": 21,
+          "maxRun": 173.19999998807907
+        },
+        "fullFrameOver50": {
+          "medianAcrossRuns": 6,
+          "minRun": 0,
+          "maxRun": 226
+        },
+        "fullFrameOver100": {
+          "medianAcrossRuns": 0,
+          "minRun": 0,
+          "maxRun": 89
+        },
+        "motionFrameSamples": {
+          "medianAcrossRuns": 1791,
+          "minRun": 929,
+          "maxRun": 1799
+        },
+        "motionFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.600000023841858,
+          "maxRun": 16.69999998807907
+        },
+        "motionFrameP95": {
+          "medianAcrossRuns": 19.400000035762787,
+          "minRun": 18.69999998807907,
+          "maxRun": 134.39999997615814
+        },
+        "motionFrameP99": {
+          "medianAcrossRuns": 35,
+          "minRun": 24.80000001192093,
+          "maxRun": 197.80000001192093
+        },
+        "motionFrameOver50": {
+          "medianAcrossRuns": 6,
+          "minRun": 0,
+          "maxRun": 182
+        },
+        "motionFrameOver100": {
+          "medianAcrossRuns": 0,
+          "minRun": 0,
+          "maxRun": 83
+        },
+        "restFrameSamples": {
+          "medianAcrossRuns": 601,
+          "minRun": 431,
+          "maxRun": 603
+        },
+        "restFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.69999998807907,
+          "maxRun": 16.69999998807907
+        },
+        "restFrameP95": {
+          "medianAcrossRuns": 17.80000001192093,
+          "minRun": 17.30000001192093,
+          "maxRun": 86.79999995231628
+        },
+        "restFrameP99": {
+          "medianAcrossRuns": 18.399999976158142,
+          "minRun": 17.69999998807907,
+          "maxRun": 102.79999995231628
+        },
+        "restFrameOver50": {
+          "medianAcrossRuns": 0,
+          "minRun": 0,
+          "maxRun": 44
+        },
+        "restFrameOver100": {
+          "medianAcrossRuns": 0,
+          "minRun": 0,
+          "maxRun": 6
+        },
+        "selectionRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9674728940783986,
+          "minRun": 0.9551800146950772,
+          "maxRun": 0.9778856526429341
+        },
+        "selectionRequestAgeMsP50": {
+          "medianAcrossRuns": 1863.800000011921,
+          "minRun": 1778.5,
+          "maxRun": 2097
+        },
+        "selectionRequestAgeMsP95": {
+          "medianAcrossRuns": 7799.5,
+          "minRun": 6084.100000023842,
+          "maxRun": 8384.599999964237
+        },
+        "orderingRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9970809007506255,
+          "minRun": 0.9946062567421791,
+          "maxRun": 0.9987505206164098
+        },
+        "orderingRequestAgeMsP50": {
+          "medianAcrossRuns": 60.09999996423721,
+          "minRun": 51.89999997615814,
+          "maxRun": 479.30000001192093
+        },
+        "orderingRequestAgeMsP95": {
+          "medianAcrossRuns": 6766.899999976158,
+          "minRun": 5034,
+          "maxRun": 7199.899999976158
+        },
+        "workerTraverseMsP50": {
+          "medianAcrossRuns": 1129.300000011921,
+          "minRun": 904.6999999880791,
+          "maxRun": 1304.2999999523163
+        },
+        "workerTraverseMsP95": {
+          "medianAcrossRuns": 1326.8999999761581,
+          "minRun": 1264.1000000238419,
+          "maxRun": 1516.6000000238419
+        },
+        "workerTraverseMsSamples": {
+          "medianAcrossRuns": 28,
+          "minRun": 24,
+          "maxRun": 30
+        },
+        "depthP50": {
+          "medianAcrossRuns": 18.30000001192093,
+          "minRun": 13.600000023841858,
+          "maxRun": 248.79999995231628
+        },
+        "depthP95": {
+          "medianAcrossRuns": 45.19999998807907,
+          "minRun": 36,
+          "maxRun": 384.69999998807907
+        },
+        "depthSamples": {
+          "medianAcrossRuns": 851,
+          "minRun": 138,
+          "maxRun": 943
+        },
+        "workerP50": {
+          "medianAcrossRuns": 10.599999964237213,
+          "minRun": 10.100000023841858,
+          "maxRun": 12.5
+        },
+        "workerP95": {
+          "medianAcrossRuns": 12.900000035762787,
+          "minRun": 11.199999988079071,
+          "maxRun": 17.099999964237213
+        },
+        "workerSamples": {
+          "medianAcrossRuns": 851,
+          "minRun": 138,
+          "maxRun": 943
+        },
+        "orderingUploadP50": {
+          "medianAcrossRuns": 0.5,
+          "minRun": 0.40000003576278687,
+          "maxRun": 0.6000000238418579
+        },
+        "orderingUploadP95": {
+          "medianAcrossRuns": 1.100000023841858,
+          "minRun": 1,
+          "maxRun": 4.300000011920929
+        },
+        "orderingUploadSamples": {
+          "medianAcrossRuns": 851,
+          "minRun": 138,
+          "maxRun": 943
+        }
+      }
+    },
+    {
+      "variant": "ordering",
+      "budget": 2500000,
+      "width": 1920,
+      "height": 1080,
+      "runs": 5,
+      "metrics": {
+        "restSettleMs": {
+          "medianAcrossRuns": 2498.899999976158,
+          "minRun": 1733,
+          "maxRun": 3398.699999988079
+        },
+        "drawn": {
+          "medianAcrossRuns": 2500000,
+          "minRun": 2500000,
+          "maxRun": 2500000
+        },
+        "orderingCapacity": {
+          "medianAcrossRuns": 3014656,
+          "minRun": 3014656,
+          "maxRun": 3014656
+        },
+        "orderingCpuBytes": {
+          "medianAcrossRuns": 12058624,
+          "minRun": 12058624,
+          "maxRun": 12058624
+        },
+        "fullFrameSamples": {
+          "medianAcrossRuns": 2045,
+          "minRun": 1404,
+          "maxRun": 2393
+        },
+        "fullFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.69999998807907,
+          "maxRun": 16.69999998807907
+        },
+        "fullFrameP95": {
+          "medianAcrossRuns": 42.39999997615814,
+          "minRun": 17.700000047683716,
+          "maxRun": 92.60000002384186
+        },
+        "fullFrameP99": {
+          "medianAcrossRuns": 86.30000001192093,
+          "minRun": 26.599999964237213,
+          "maxRun": 155.60000002384186
+        },
+        "fullFrameOver50": {
+          "medianAcrossRuns": 92,
+          "minRun": 5,
+          "maxRun": 259
+        },
+        "fullFrameOver100": {
+          "medianAcrossRuns": 13,
+          "minRun": 0,
+          "maxRun": 64
+        },
+        "motionFrameSamples": {
+          "medianAcrossRuns": 1700,
+          "minRun": 1085,
+          "maxRun": 1792
+        },
+        "motionFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.600000023841858,
+          "maxRun": 16.69999998807907
+        },
+        "motionFrameP95": {
+          "medianAcrossRuns": 23.69999998807907,
+          "minRun": 18.19999998807907,
+          "maxRun": 111
+        },
+        "motionFrameP99": {
+          "medianAcrossRuns": 53.700000047683716,
+          "minRun": 35.60000002384186,
+          "maxRun": 159.69999998807907
+        },
+        "motionFrameOver50": {
+          "medianAcrossRuns": 21,
+          "minRun": 4,
+          "maxRun": 175
+        },
+        "motionFrameOver100": {
+          "medianAcrossRuns": 11,
+          "minRun": 0,
+          "maxRun": 61
+        },
+        "restFrameSamples": {
+          "medianAcrossRuns": 345,
+          "minRun": 297,
+          "maxRun": 601
+        },
+        "restFrameP50": {
+          "medianAcrossRuns": 16.69999998807907,
+          "minRun": 16.600000023841858,
+          "maxRun": 16.899999976158142
+        },
+        "restFrameP95": {
+          "medianAcrossRuns": 80.80000001192093,
+          "minRun": 17,
+          "maxRun": 93.5
+        },
+        "restFrameP99": {
+          "medianAcrossRuns": 92,
+          "minRun": 17.600000023841858,
+          "maxRun": 125.90000003576279
+        },
+        "restFrameOver50": {
+          "medianAcrossRuns": 71,
+          "minRun": 0,
+          "maxRun": 84
+        },
+        "restFrameOver100": {
+          "medianAcrossRuns": 2,
+          "minRun": 0,
+          "maxRun": 9
+        },
+        "selectionRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9589442815249267,
+          "minRun": 0.9188612099644128,
+          "maxRun": 0.9711779448621554
+        },
+        "selectionRequestAgeMsP50": {
+          "medianAcrossRuns": 1873.1000000238419,
+          "minRun": 1746.800000011921,
+          "maxRun": 2082.899999976158
+        },
+        "selectionRequestAgeMsP95": {
+          "medianAcrossRuns": 6333.199999988079,
+          "minRun": 6024.5,
+          "maxRun": 7076.699999988079
+        },
+        "orderingRequestAgeMsKnownFraction": {
+          "medianAcrossRuns": 0.9979114452798663,
+          "minRun": 0.9928825622775801,
+          "maxRun": 0.9987410826689047
+        },
+        "orderingRequestAgeMsP50": {
+          "medianAcrossRuns": 83.40000003576279,
+          "minRun": 50.80000001192093,
+          "maxRun": 373.19999998807907
+        },
+        "orderingRequestAgeMsP95": {
+          "medianAcrossRuns": 4933.400000035763,
+          "minRun": 4682.300000011921,
+          "maxRun": 6001.900000035763
+        },
+        "workerTraverseMsP50": {
+          "medianAcrossRuns": 1068.0999999642372,
+          "minRun": 905.9000000357628,
+          "maxRun": 1310.8999999761581
+        },
+        "workerTraverseMsP95": {
+          "medianAcrossRuns": 1468.5,
+          "minRun": 1381,
+          "maxRun": 1917.2999999523163
+        },
+        "workerTraverseMsSamples": {
+          "medianAcrossRuns": 27,
+          "minRun": 24,
+          "maxRun": 30
+        },
+        "depthP50": {
+          "medianAcrossRuns": 22,
+          "minRun": 14.200000047683716,
+          "maxRun": 204.89999997615814
+        },
+        "depthP95": {
+          "medianAcrossRuns": 90.80000001192093,
+          "minRun": 33.5,
+          "maxRun": 357.69999998807907
+        },
+        "depthSamples": {
+          "medianAcrossRuns": 666,
+          "minRun": 146,
+          "maxRun": 880
+        },
+        "workerP50": {
+          "medianAcrossRuns": 10.199999988079071,
+          "minRun": 9.5,
+          "maxRun": 11.199999988079071
+        },
+        "workerP95": {
+          "medianAcrossRuns": 13.799999952316284,
+          "minRun": 10.600000023841858,
+          "maxRun": 22.69999998807907
+        },
+        "workerSamples": {
+          "medianAcrossRuns": 666,
+          "minRun": 146,
+          "maxRun": 880
+        },
+        "orderingUploadP50": {
+          "medianAcrossRuns": 0.30000001192092896,
+          "minRun": 0.30000001192092896,
+          "maxRun": 0.30000001192092896
+        },
+        "orderingUploadP95": {
+          "medianAcrossRuns": 0.699999988079071,
+          "minRun": 0.5999999642372131,
+          "maxRun": 6.400000035762787
+        },
+        "orderingUploadSamples": {
+          "medianAcrossRuns": 666,
+          "minRun": 146,
+          "maxRun": 880
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "spark-contribution-benchmarks",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node capture-metrics.test.mjs && node capture-controller.test.mjs && node protocol.test.mjs",
+    "test:native": "node validate-native-browser.mjs",
+    "test:capture": "node validate-capture-browser.mjs results/capture-validation"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1",
+    "pngjs": "7.0.0"
+  }
+}

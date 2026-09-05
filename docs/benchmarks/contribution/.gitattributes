@@ -1,0 +1,2 @@
+# Preserve the exact unified-diff context lines in this observation patch.
+upstream-observation.patch -whitespace

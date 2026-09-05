@@ -1,0 +1,16 @@
+{
+  "performanceClaimQualified": false,
+  "inputs": [
+    {
+      "file": "results/ordering-primary/analysis.json",
+      "sha256": "4452ac55d2b9d37c15c7ea74a5f8f79eedcc99d1160474a5c1cbd07a6e099406"
+    },
+    {
+      "file": "results/ordering-cleanup-control/analysis.json",
+      "sha256": "4d2070bd544c106e325d3716794fbbe1e2ea1bad955abe2f6f0b7f2fbd63d92f"
+    }
+  ],
+  "metric": "p95 submitted-frame intervals for each complete 40-second capture",
+  "aggregation": "none: every run shown",
+  "qualification": "Other GPU activity and high variance"
+}

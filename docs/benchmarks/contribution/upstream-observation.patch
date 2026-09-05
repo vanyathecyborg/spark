@@ -1,0 +1,698 @@
+diff --git a/src/SparkRenderer.ts b/src/SparkRenderer.ts
+index 01c9a4c..77f192a 100644
+--- a/src/SparkRenderer.ts
++++ b/src/SparkRenderer.ts
+@@ -1,3 +1,4 @@
++type SparkDebugEvent = Record<string, unknown>;
+ import * as THREE from "three";
+ import {
+   ExtSplats,
+@@ -943,6 +944,20 @@ export class SparkRenderer extends THREE.Mesh {
+ 
+     let doUpdate = true;
+     const needsUpdate = viewChanged || version !== this.current.version;
++    // BEGIN comparison observation
++    if (this.debugCaptureEnabled && (version !== this.current.version || mappingVersion !== this.display.mappingVersion || performance.now() - this.comparisonUpdateAt >= 1000)) {
++      this.comparisonUpdateAt = performance.now();
++      this.captureDebugEvent("renderer-update", {
++        backend: "WebGL", version, currentVersion: this.current.version,
++        mappingVersion, currentMappingVersion: this.current.mappingVersion,
++        displayMappingVersion: this.display.mappingVersion, activeSplats: this.activeSplats,
++        numSplats: next.numSplats, sortDirty: this.sortDirty,
++        mappingUpdated: mappingVersion !== this.display.mappingVersion,
++        splatsUpdated: version !== this.current.version, viewChanged,
++        pendingRenderSlot: null, depthPendingReadback: null,
++      });
++    }
++    // END comparison observation
+     const mappingUpdated = mappingVersion !== this.display.mappingVersion;
+ 
+     if (autoUpdate && !needsUpdate) {
+@@ -990,6 +1005,471 @@ export class SparkRenderer extends THREE.Mesh {
+     await this.driveSort();
+   }
+ 
++  // BEGIN comparison observation: capture methods copied from the fork; no scheduling policy.
++  debugCaptureEnabled = false;
++  debugCaptureLimit = 100000;
++  private debugCaptureEvents: SparkDebugEvent[] = [];
++  private debugCaptureSequence = 0;
++  private debugCaptureStartedAt = performance.now();
++  private comparisonSerial = 0;
++  private comparisonFovX: number | null = null;
++  private comparisonFovY: number | null = null;
++  private comparisonUpdateAt = 0;
++  lastComputeDepthTime: number | null = null;
++  lastSortWorkerTime: number | null = null;
++  lastOrderingUploadTime: number | null = null;
++  lastSortDuration: number | null = null;
++  lastWorkerTraverseMs: number | null = null;
++  lastLodApplyTime: number | null = null;
++  lastLodTraversalDebug: Record<string, unknown> | null = null;
++  lastLodApplyDebug: Record<string, unknown> | null = null;
++  lastLodSelected = 0;
++  lastSortMode = "webgl-readback";
++  lastSortReason = "webgl";
++  private sanitizeDebugValue(
++    value: unknown,
++    depth = 0,
++    seen: WeakSet<object> = new WeakSet(),
++  ): unknown {
++    if (value === null || value === undefined) return value;
++    const type = typeof value;
++    if (type === "string" || type === "boolean") return value;
++    if (type === "number")
++      return Number.isFinite(value) ? value : String(value);
++    if (type === "bigint") return value.toString();
++    if (type === "function") {
++      return `[Function ${(value as { name?: string }).name || "anonymous"}]`;
++    }
++    if (type !== "object") return String(value);
++
++    const objectValue = value as object;
++    if (seen.has(objectValue)) return "[Circular]";
++    seen.add(objectValue);
++
++    if (value instanceof THREE.Vector2) {
++      return { type: "Vector2", x: value.x, y: value.y };
++    }
++    if (value instanceof THREE.Vector3) {
++      return { type: "Vector3", x: value.x, y: value.y, z: value.z };
++    }
++    if (value instanceof THREE.Vector4) {
++      return {
++        type: "Vector4",
++        x: value.x,
++        y: value.y,
++        z: value.z,
++        w: value.w,
++      };
++    }
++    if (value instanceof THREE.Quaternion) {
++      return {
++        type: "Quaternion",
++        x: value.x,
++        y: value.y,
++        z: value.z,
++        w: value.w,
++      };
++    }
++    if (value instanceof THREE.Euler) {
++      return {
++        type: "Euler",
++        x: value.x,
++        y: value.y,
++        z: value.z,
++        order: value.order,
++      };
++    }
++    if (value instanceof THREE.Matrix3 || value instanceof THREE.Matrix4) {
++      return {
++        type: value.constructor.name,
++        elements: [...value.elements],
++      };
++    }
++    if (value instanceof THREE.Color) {
++      return { type: "Color", r: value.r, g: value.g, b: value.b };
++    }
++    if (value instanceof Error) {
++      return {
++        type: value.constructor.name,
++        message: value.message,
++        stack: value.stack,
++      };
++    }
++    if (ArrayBuffer.isView(value)) {
++      const view = value as ArrayBufferView;
++      if (value instanceof DataView) {
++        return {
++          type: "DataView",
++          byteLength: value.byteLength,
++          byteOffset: value.byteOffset,
++        };
++      }
++      const typed = value as unknown as {
++        length: number;
++        slice: (start: number, end?: number) => ArrayLike<unknown>;
++      };
++      const sampleCount = Math.min(typed.length, 16);
++      const sampleStart = Array.from(typed.slice(0, sampleCount)).map((entry) =>
++        this.sanitizeDebugValue(entry, depth + 1, seen),
++      );
++      const sampleEnd =
++        typed.length > sampleCount
++          ? Array.from(
++              typed.slice(Math.max(0, typed.length - sampleCount)),
++            ).map((entry) => this.sanitizeDebugValue(entry, depth + 1, seen))
++          : [];
++      return {
++        type: value.constructor.name,
++        length: typed.length,
++        byteLength: view.byteLength,
++        byteOffset: view.byteOffset,
++        sampleStart,
++        sampleEnd,
++      };
++    }
++    if (value instanceof ArrayBuffer) {
++      return { type: "ArrayBuffer", byteLength: value.byteLength };
++    }
++    if (depth >= 5) {
++      return {
++        type: objectValue.constructor?.name ?? "Object",
++        truncated: true,
++      };
++    }
++    if (Array.isArray(value)) {
++      const maxArrayEntries = value.length > 128 ? 64 : value.length;
++      const entries = value
++        .slice(0, maxArrayEntries)
++        .map((entry) => this.sanitizeDebugValue(entry, depth + 1, seen));
++      if (value.length > maxArrayEntries) {
++        return {
++          type: "Array",
++          length: value.length,
++          sampleStart: entries,
++        };
++      }
++      return entries;
++    }
++    if (value instanceof Map) {
++      return {
++        type: "Map",
++        size: value.size,
++        entries: Array.from(value.entries())
++          .slice(0, 64)
++          .map(([key, entry]) => [
++            this.sanitizeDebugValue(key, depth + 1, seen),
++            this.sanitizeDebugValue(entry, depth + 1, seen),
++          ]),
++      };
++    }
++    if (value instanceof Set) {
++      return {
++        type: "Set",
++        size: value.size,
++        values: Array.from(value.values())
++          .slice(0, 64)
++          .map((entry) => this.sanitizeDebugValue(entry, depth + 1, seen)),
++      };
++    }
++
++    const output: Record<string, unknown> = {
++      type: objectValue.constructor?.name ?? "Object",
++    };
++    for (const key of Object.keys(value as Record<string, unknown>).slice(
++      0,
++      96,
++    )) {
++      try {
++        output[key] = this.sanitizeDebugValue(
++          (value as Record<string, unknown>)[key],
++          depth + 1,
++          seen,
++        );
++      } catch (error) {
++        output[key] = `[Unreadable: ${
++          error instanceof Error ? error.message : String(error)
++        }]`;
++      }
++    }
++    const keyCount = Object.keys(value as Record<string, unknown>).length;
++    if (keyCount > 96) {
++      output.truncatedKeys = keyCount - 96;
++    }
++    return output;
++  }
++
++  private makeDebugEvent(
++    label: string,
++    data: Record<string, unknown> = {},
++  ): SparkDebugEvent {
++    const now = performance.now();
++    return this.sanitizeDebugValue({
++      seq: ++this.debugCaptureSequence,
++      label,
++      timestampMs: Number(now.toFixed(3)),
++      captureAgeMs: Number((now - this.debugCaptureStartedAt).toFixed(3)),
++      ...data,
++    }) as SparkDebugEvent;
++  }
++
++  private pushDebugEvent(
++    label: string,
++    data: Record<string, unknown> = {},
++  ): SparkDebugEvent | null {
++    if (!this.debugCaptureEnabled) return null;
++    const event = this.makeDebugEvent(label, data);
++    if (this.debugCaptureLimit > 0) {
++      this.debugCaptureEvents.push(event);
++      const overflow = this.debugCaptureEvents.length - this.debugCaptureLimit;
++      if (overflow > 0) {
++        this.debugCaptureEvents.splice(0, overflow);
++      }
++    }
++    return event;
++  }
++
++  captureDebugEvent(
++    label: string,
++    data: Record<string, unknown> = {},
++  ): SparkDebugEvent | null {
++    return this.pushDebugEvent(label, data);
++  }
++
++  clearDebugEvents(): void {
++    this.debugCaptureEvents = [];
++    this.debugCaptureSequence = 0;
++    this.debugCaptureStartedAt = performance.now();
++  }
++
++  getDebugEvents(): SparkDebugEvent[] {
++    return this.debugCaptureEvents.map((event) => ({ ...event }));
++  }
++
++  getDebugSnapshot(extra: Record<string, unknown> = {}): SparkDebugEvent {
++    const self = this as unknown as SparkRenderer & Record<string, any>;
++    const summarizeAccumulator = (accumulator: SplatAccumulator) => ({
++      version: accumulator.version,
++      mappingVersion: accumulator.mappingVersion,
++      numSplats: accumulator.numSplats,
++      maxSplats: accumulator.maxSplats,
++      extSplats: accumulator.extSplats,
++      viewOrigin: accumulator.viewOrigin,
++      viewDirection: accumulator.viewDirection,
++    });
++    const lodInstances = Array.from(self.lodInstances.entries()).map(
++      ([mesh, lod]) => ({
++        uuid: mesh.uuid,
++        name: mesh.name,
++        visible: mesh.visible,
++        lodId: lod.lodId,
++        numSplats: lod.numSplats,
++        indicesLength: lod.indices.length,
++        lastApplyDecision: (lod as any).lastApplyDecision,
++        lastAppliedAtMs: (lod as any).lastAppliedAtMs,
++        lastSkippedAtMs: (lod as any).lastSkippedAtMs,
++        rawSourceSplats: (lod as any).rawSourceSplats,
++        selectedSourceRatio: (lod as any).selectedSourceRatio,
++        selectedBudgetRatio: (lod as any).selectedBudgetRatio,
++        selectedCurrentRatio: (lod as any).selectedCurrentRatio,
++        meshSplats: mesh.numSplats,
++        meshEnableLod: mesh.enableLod,
++        lodScale: mesh.lodScale,
++      }),
++    );
++    return self.sanitizeDebugValue({
++      kind: "SparkRendererDebugReport",
++      capturedAtMs: Number(performance.now().toFixed(3)),
++      captureStartedAtMs: Number(self.debugCaptureStartedAt.toFixed(3)),
++      backend: self.isWebGPU ? "WebGPU" : "WebGL",
++      isWebGPU: false,
++      webgpuDebug: self.webgpuDebug,
++      debugCaptureEnabled: self.debugCaptureEnabled,
++      debugEventCount: self.debugCaptureEvents.length,
++      renderSize: self.renderSize,
++      canvas: {
++        width: self.renderer.domElement.width,
++        height: self.renderer.domElement.height,
++        clientWidth: self.renderer.domElement.clientWidth,
++        clientHeight: self.renderer.domElement.clientHeight,
++        devicePixelRatio:
++          typeof window !== "undefined" ? window.devicePixelRatio : undefined,
++      },
++      options: {
++        sortRadial: self.sortRadial,
++        minSortIntervalMs: self.minSortIntervalMs,
++        minLodIntervalMs: self.minLodIntervalMs,
++        webgpuLodViewSortIntervalMs: self.webgpuLodViewSortIntervalMs,
++        lodUpdateMinSplatsDelta: self.lodUpdateMinSplatsDelta,
++        lodForceUpdateIntervalMs: self.lodForceUpdateIntervalMs,
++        lodSplatCount: self.lodSplatCount,
++        lodSplatScale: self.lodSplatScale,
++        lodRenderScale: self.lodRenderScale,
++        enableLod: self.enableLod,
++        enableDriveLod: self.enableDriveLod,
++        webgpuLodBudgetSaturatedFastPath: self.webgpuLodBudgetSaturatedFastPath,
++        webgpuLodBudgetSaturationRatio: self.webgpuLodBudgetSaturationRatio,
++        webgpuLodCurrentFullRatio: self.webgpuLodCurrentFullRatio,
++        webgpuLodFullSourceRatio: self.webgpuLodFullSourceRatio,
++        webgpuLodMaxReuseMs: self.webgpuLodMaxReuseMs,
++        webgpuLodIdleApplyMs: self.webgpuLodIdleApplyMs,
++        webgpuLodWorkloadCadence: self.webgpuLodWorkloadCadence,
++        webgpuLodMovingRefreshDistance: self.webgpuLodMovingRefreshDistance,
++        webgpuLodMovingRefreshMinQuatDot: self.webgpuLodMovingRefreshMinQuatDot,
++        webgpuLodMovingActiveMs: self.webgpuLodMovingActiveMs,
++        webgpuLodHighWorkIntervalMs: self.webgpuLodHighWorkIntervalMs,
++        webgpuLodSortStrategy: self.webgpuLodSortStrategy,
++        lodSortStrategy: self.lodSortStrategy,
++        opacityQuadRadius: self.opacityQuadRadius,
++      },
++      rendererState: {
++        activeSplats: self.activeSplats,
++        maxSplats: self.maxSplats,
++        sorting: self.sorting,
++        sortDirty: self.sortDirty,
++        gatherJustRan: self.gatherJustRan,
++        lastReadback: self.lastReadback,
++        orderingTextureSize: self.orderingTexture
++          ? {
++              width: self.orderingTexture.image.width,
++              height: self.orderingTexture.image.height,
++            }
++          : null,
++        current: summarizeAccumulator(self.current),
++        display: summarizeAccumulator(self.display),
++      },
++      timingsMs: {
++        lastUploadTime: self.lastUploadTime,
++        lastComputeDepthTime: self.lastComputeDepthTime,
++        lastDepthDispatchTime: self.lastDepthDispatchTime,
++        lastDepthWaitTime: self.lastDepthWaitTime,
++        lastDepthMapTime: self.lastDepthMapTime,
++        lastSortWorkerTime: self.lastSortWorkerTime,
++        lastOrderingUploadTime: self.lastOrderingUploadTime,
++        lastRenderSlotCommitTime: self.lastRenderSlotCommitTime,
++        lastRenderPassTime: self.lastRenderPassTime,
++        lastSortDuration: self.lastSortDuration,
++        lastTraverseTime: self.lastTraverseTime,
++        lastWorkerTraverseMs: self.lastWorkerTraverseMs,
++        workerTraverseMsP50: self.workerTraverseMsP50,
++        workerTraverseMsP95: self.workerTraverseMsP95,
++        workerTraverseSampleCount: self.workerTraverseSampleCount,
++        lastLodApplyTime: self.lastLodApplyTime,
++        lastFrameGapMs: self.lastFrameGapMs,
++        lastWebGPUGather: self.lastWebGPUGatherDebug?.timingsMs ?? null,
++      },
++      sortState: {
++        lastSortMode: self.lastSortMode,
++        lastSortReason: self.lastSortReason,
++        lastSortTime: self.lastSortTime,
++        lastSortNumSplats: self.lastSortNumSplats,
++        lastDepthSlotGeneration: self.lastDepthSlotGeneration,
++        lastActiveSlotGeneration: self.lastActiveSlotGeneration,
++        webgpuLodSyncDepthCount: self.webgpuLodSyncDepthCount,
++        webgpuLodAsyncDispatchCount: self.webgpuLodAsyncDispatchCount,
++        webgpuLodAsyncReadyCount: self.webgpuLodAsyncReadyCount,
++        webgpuLodReusedOrderingFrames: self.webgpuLodReusedOrderingFrames,
++        staleDepthRejectCount: self.staleDepthRejectCount,
++        lastWebGPULodEffectiveViewSortIntervalMs:
++          self.lastWebGPULodEffectiveViewSortIntervalMs,
++        webgpuLodSortStrategy: self.webgpuLodSortStrategy,
++        lodSortStrategy: self.lodSortStrategy,
++        webgpuLodPrefetchDepth: self.webgpuLodPrefetchDepth,
++        webgpuLodPrefetchDispatchCount: self.webgpuLodPrefetchDispatchCount,
++        webgpuLodViewSortMaxIntervalMs: self.webgpuLodViewSortMaxIntervalMs,
++        // Sort-pipeline failures are contained rather than propagated, so they
++        // are only observable here. A non-zero count invalidates the capture.
++        sortErrorCount: self.sortErrorCount,
++        lastSortError: self.lastSortError,
++      },
++      // Features reported unsupported on this backend during the session. A
++      // non-empty list means the rendered image is knowingly degraded.
++      unsupportedCapabilities: self.unsupportedCapabilities,
++      // WebGPU device/backend health. A skipped draw is indistinguishable from
++      // flicker at the pixel level, so it must be attributable in a capture.
++      webgpuHealth: self.webgpuBackend
++        ? {
++            deviceLost: self.webgpuBackend.deviceLost,
++            deviceLostReason: self.webgpuBackend.deviceLostReason,
++            uncapturedErrorCount: self.webgpuBackend.uncapturedErrorCount,
++            firstUncapturedError: self.webgpuBackend.firstUncapturedError,
++            drawSkipped: { ...self.webgpuBackend.drawSkipped },
++            lastDrawSkippedReason: self.webgpuBackend.lastDrawSkippedReason,
++            sceneDepthAttached: self.webgpuBackend.hasExternalDepth(),
++            limits: self.webgpuBackend.describeLimits(),
++            // GPU-side timing, when the app enabled it and the device supports
++            // timestamp-query. frameMs is a span, not a sum of passes.
++            gpuTimingEnabled: self.webgpuBackend.gpuTimingAvailable,
++            gpuFrameMs: self.webgpuBackend.lastGpuFrameMs,
++            gpuPassMs: { ...self.webgpuBackend.lastGpuPassMs },
++          }
++        : null,
++      lodState: {
++        lodMeshes: self.lodMeshes.map(({ mesh, version }) => ({
++          uuid: mesh.uuid,
++          name: mesh.name,
++          version,
++          numSplats: mesh.numSplats,
++        })),
++        lodInstances,
++        lastLodSelected: self.lastLodSelected,
++        lastLodChanged: self.lastLodChanged,
++        lastLodChangedCount: self.lastLodChangedCount,
++        lastLodUnchangedCount: self.lastLodUnchangedCount,
++        lastLodThrottleSkips: self.lastLodThrottleSkips,
++        lastLodTinyChangeSkips: self.lastLodTinyChangeSkips,
++        lastLodSampleMismatchRatio: self.lastLodSampleMismatchRatio,
++        lastLodUpdateTime: self.lastLodUpdateTime,
++        lastLodForceUpdateTime: self.lastLodForceUpdateTime,
++        lastPixelLimit: self.lastPixelLimit,
++        lastLodDecision: self.lastLodDecision,
++        lastLodTraversalReason: self.lastLodTraversalReason,
++        lastLodSelectedSourceRatio: self.lastLodSelectedSourceRatio,
++        lastLodSelectedBudgetRatio: self.lastLodSelectedBudgetRatio,
++        lastLodSelectedCurrentRatio: self.lastLodSelectedCurrentRatio,
++        lastLodBudgetSaturatedSkips: self.lastLodBudgetSaturatedSkips,
++        lastLodPendingSlotSkips: self.lastLodPendingSlotSkips,
++        lastLodObsoleteDrops: self.lastLodObsoleteDrops,
++        lastAcceptedLodTraversalSerial: self.lastAcceptedLodTraversalSerial,
++        lastLodTraversal: self.lastLodTraversalDebug,
++        lastLodApply: self.lastLodApplyDebug,
++        lastViewChangedAtMs: self.lastViewChangedAtMs,
++        cameraIdleMs: null,
++      },
++      webgpuBackend: self.webgpuBackend
++        ? {
++            renderState: self.webgpuBackend.getRenderStateDebug(),
++            shEnabled: self.webgpuBackend.shEnabled,
++            shNumBands: self.webgpuBackend.shNumBands,
++            shIsExt: self.webgpuBackend.shIsExt,
++            shForceDisable: self.webgpuBackend.shForceDisable,
++            shMax: self.webgpuBackend.shMax,
++            shInverseQuat: self.webgpuBackend.shInverseQuat,
++            splatEncoding: self.webgpuBackend.splatEncoding,
++            useLodIndices: self.webgpuBackend.useLodIndices,
++            halvedAlpha: self.webgpuBackend.halvedAlpha,
++            pagedMode: self.webgpuBackend.pagedMode,
++            depthOutputCapacity: self.webgpuBackend.depthOutputCapacity,
++            depthMappingCapacity: self.webgpuBackend.depthMappingCapacity,
++          }
++        : null,
++      webgpuGather: self.lastWebGPUGatherDebug,
++      webgpuDepthReadback: self.lastWebGPUDepthReadbackDebug,
++      extra,
++    }) as SparkDebugEvent;
++  }
++
++  getDebugReport(extra: Record<string, unknown> = {}): string {
++    return JSON.stringify(
++      {
++        snapshot: this.getDebugSnapshot(extra),
++        events: this.getDebugEvents(),
++      },
++      null,
++      2,
++    );
++  }
++
++  // END comparison observation.
+   private async driveSort() {
+     if (this.sorting || !this.sortDirty) {
+       return;
+@@ -1034,6 +1514,7 @@ export class SparkRenderer extends THREE.Mesh {
+     const readback = Readback.ensureBuffer(maxSplats, this.readback32);
+     this.readback32 = readback;
+ 
++    const comparisonDepthStart = performance.now();
+     await this.readbackDepth({
+       current,
+       renderer: this.renderer,
+@@ -1041,6 +1522,8 @@ export class SparkRenderer extends THREE.Mesh {
+       readback,
+     });
+ 
++    this.lastComputeDepthTime = performance.now() - comparisonDepthStart;
++
+     if (this.sortPause > 0) {
+       await new Promise((resolve) => setTimeout(resolve, this.sortPause));
+     }
+@@ -1048,6 +1531,7 @@ export class SparkRenderer extends THREE.Mesh {
+     if (!this.sortWorker) {
+       this.sortWorker = new SplatWorker();
+     }
++    const comparisonWorkerStart = performance.now();
+     const result = (await this.sortWorker.call("sortSplats32", {
+       numSplats,
+       readback,
+@@ -1058,13 +1542,17 @@ export class SparkRenderer extends THREE.Mesh {
+       activeSplats: number;
+     };
+ 
++    this.lastSortWorkerTime = performance.now() - comparisonWorkerStart;
++
+     if (this.sortDelay > 0) {
+       await new Promise((resolve) => setTimeout(resolve, this.sortDelay));
+     }
+ 
+     this.readback32 = result.readback;
+ 
++    const previousActiveSplats = this.activeSplats;
+     this.activeSplats = result.activeSplats;
++    const comparisonOrderingStart = performance.now();
+ 
+     if (this.orderingTexture) {
+       if (rows > this.orderingTexture.image.height) {
+@@ -1100,6 +1588,7 @@ export class SparkRenderer extends THREE.Mesh {
+       }
+     }
+ 
++    this.lastOrderingUploadTime = performance.now() - comparisonOrderingStart;
+     // console.log(`Sorted (${this.minSortIntervalMs}) ${numSplats} splats in ${(performance.now() - now).toFixed(0)} ms`);
+ 
+     if (this.current.mappingVersion === current.mappingVersion) {
+@@ -1109,6 +1598,15 @@ export class SparkRenderer extends THREE.Mesh {
+       }
+     }
+     this.sorting = false;
++    this.lastSortDuration = performance.now() - now;
++    this.captureDebugEvent("sort-complete", {
++      backend: "WebGL", numSplats, activeSplats: this.activeSplats, previousActiveSplats, rows,
++      sortMode: this.lastSortMode, sortReason: this.lastSortReason,
++      timingsMs: { total: this.lastSortDuration, upload: null, depth: this.lastComputeDepthTime,
++        depthDispatch: null, depthWait: null, depthMap: null, worker: this.lastSortWorkerTime,
++        orderingUpload: this.lastOrderingUploadTime, renderSlotCommit: null },
++      backendState: null, gather: null, depthReadback: null,
++    });
+     this.setDirty();
+ 
+     this.driveSort();
+@@ -1142,6 +1640,8 @@ export class SparkRenderer extends THREE.Mesh {
+     camera: THREE.Camera;
+     scene: THREE.Scene;
+   }) {
++    this.comparisonFovY = camera instanceof THREE.PerspectiveCamera ? camera.fov : null;
++    this.comparisonFovX = camera instanceof THREE.PerspectiveCamera ? (2 * Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect) * 180 / Math.PI) : null;
+     const defaultSplatCount = this.defaultSplatTarget();
+     const splatCount = this.lodSplatCount ?? defaultSplatCount;
+     const maxSplats = splatCount * this.lodSplatScale;
+@@ -1439,6 +1939,15 @@ export class SparkRenderer extends THREE.Mesh {
+       >,
+     );
+ 
++    const serial = ++this.comparisonSerial;
++    const previousPixelLimit = this.lastPixelLimit;
++    this.captureDebugEvent("lod-traverse-start", {
++      serial, reason: null, maxSplats, pixelScaleLimit, lastPixelLimit: previousPixelLimit,
++      fovXdegrees: this.comparisonFovX, fovYdegrees: this.comparisonFovY,
++      camera: { position: viewPos.toArray(), quaternion: viewQuat.toArray() },
++      instanceCount: Object.keys(instances).length,
++      minLodIntervalMs: null, effectiveLodIntervalMs: null,
++    });
+     const traverseStart = performance.now();
+     const result = (await worker.call("traverseLodTrees", {
+       maxSplats,
+@@ -1453,6 +1962,9 @@ export class SparkRenderer extends THREE.Mesh {
+       >;
+       chunks: [number, number][];
+       pixelLimit?: number;
++      workerTraverseMs: number;
++      heapEmitted?: number;
++      frontierDrained?: number;
+     };
+     this.lastTraverseTime = performance.now() - traverseStart;
+ 
+@@ -1466,7 +1978,27 @@ export class SparkRenderer extends THREE.Mesh {
+     //   `traverseLodTrees in ${this.lastTraverseTime} ms, pixelLimit=${pixelLimit}, totalLodSplats=${totalLodSplats}`,
+     // );
+ 
++    this.lastWorkerTraverseMs = result.workerTraverseMs;
++    this.lastLodSelected = totalLodSplats;
++    const rawSourceSplats = lodMeshes.reduce((n, mesh) => n + (mesh.packedSplats?.lodSplats?.numSplats ?? mesh.extSplats?.lodSplats?.numSplats ?? mesh.numSplats), 0);
++    const currentMeshSplats = Math.max(this.activeSplats, ...lodMeshes.map(mesh => this.lodInstances.get(mesh)?.numSplats ?? mesh.numSplats));
++    this.lastLodTraversalDebug = {
++      serial, reason: null, workerRoundTripMs: this.lastTraverseTime,
++      fovXdegrees: this.comparisonFovX, fovYdegrees: this.comparisonFovY,
++      workerTraverseMs: result.workerTraverseMs,
++      resultTransferBytes: Object.values(keyIndices).reduce((n, r) => n + r.indices.byteLength, 0),
++      selectedSplats: totalLodSplats, maxSplats, rawSourceSplats, currentMeshSplats,
++      selectedSourceRatio: rawSourceSplats > 0 ? totalLodSplats / rawSourceSplats : 0,
++      selectedCurrentRatio: currentMeshSplats > 0 ? totalLodSplats / currentMeshSplats : 0,
++      heapEmitted: result.heapEmitted, frontierDrained: result.frontierDrained,
++      selectedBudgetRatio: maxSplats > 0 ? totalLodSplats / maxSplats : 0,
++      pixelLimit, lastPixelLimit: previousPixelLimit,
++      minLodIntervalMs: null, effectiveLodIntervalMs: null,
++    };
++    this.captureDebugEvent("lod-traverse-complete", this.lastLodTraversalDebug);
++    const comparisonApplyStart = performance.now();
+     this.updateLodIndices(uuidToMesh, keyIndices);
++    this.lastLodApplyTime = performance.now() - comparisonApplyStart;
+     // console.log("chunks.length =", chunks.length);
+ 
+     if (this.pager) {
+@@ -1593,7 +2125,10 @@ export class SparkRenderer extends THREE.Mesh {
+     for (const [uuid, countIndices] of Object.entries(keyIndices)) {
+       const { lodId, numSplats, indices } = countIndices;
+       const mesh = uuidToMesh.get(uuid) as SplatMesh;
+-
++      const previousSelectedSplats = this.lodInstances.get(mesh)?.numSplats ?? 0;
++      const mappingVersionBefore = mesh.mappingVersion;
++      const rawSourceSplats = mesh.packedSplats?.lodSplats?.numSplats ?? mesh.extSplats?.lodSplats?.numSplats ?? mesh.numSplats;
++      const maxSplats = (this.lodSplatCount ?? this.defaultSplatTarget()) * this.lodSplatScale;
+       if (mesh.paged) {
+         mesh.paged.update(numSplats, indices);
+         // console.log("*** paged.update", lodId, numSplats, indices.slice(0, 5).join(","));
+@@ -1640,6 +2175,18 @@ export class SparkRenderer extends THREE.Mesh {
+         }
+       }
+       mesh.updateMappingVersion();
++      this.lastLodApplyDebug = {
++        serial: this.comparisonSerial, meshUuid: uuid, lodId, decision: "apply",
++        selectedSplats: numSplats, previousSelectedSplats, rawSourceSplats,
++        currentMeshSplats: Math.max(mesh.numSplats, previousSelectedSplats), maxSplats,
++        splatDelta: Math.abs(numSplats - previousSelectedSplats), sampleMismatchRatio: null,
++        selectedSourceRatio: rawSourceSplats > 0 ? numSplats / rawSourceSplats : 0,
++        selectedBudgetRatio: maxSplats > 0 ? numSplats / maxSplats : 0,
++        selectedCurrentRatio: Math.max(mesh.numSplats, previousSelectedSplats) > 0 ? numSplats / Math.max(mesh.numSplats, previousSelectedSplats) : 0,
++        cameraMoving: null, forceTinyUpdate: null, mappingVersionBefore,
++        mappingVersionAfter: mesh.mappingVersion, indicesBytes: indices.byteLength,
++      };
++      this.captureDebugEvent("lod-apply-decision", this.lastLodApplyDebug);
+     }
+   }
+ 
+diff --git a/src/worker.ts b/src/worker.ts
+index a6825d4..0e75fef 100644
+--- a/src/worker.ts
++++ b/src/worker.ts
+@@ -756,6 +756,7 @@ function traverseLodTrees({
+     keyInstances.map(([_key, instance]) => instance.coneFoveate),
+   );
+ 
++  const workerTraverseStart = performance.now();
+   const lodFunction =
+     traverseMode === "dynamic"
+       ? dynamic_traverse_lod_trees
+@@ -781,6 +782,12 @@ function traverseLodTrees({
+     chunks: [number, number][];
+     pixelLimit?: number;
+   };
++  const workerTraverseMs = performance.now() - workerTraverseStart;
++  // Rust output before frontier drain and frontier length have matching definitions.
++  // leafCount does NOT: upstream counts popped leaves, fork counts all leaves.
++  const shape = result as typeof result & { outputSize?: number; frontierSize?: number };
++  const heapEmitted = traverseMode === "standard" ? shape.outputSize : undefined;
++  const frontierDrained = traverseMode === "standard" ? shape.frontierSize : undefined;
+   const { instanceIndices, chunks, pixelLimit } = result;
+ 
+   const indices = keyInstances.reduce(
+@@ -797,6 +804,9 @@ function traverseLodTrees({
+   // console.log(`traverseLodTrees: chunks=${chunks.length}`, JSON.stringify(chunks));
+   return {
+     keyIndices: indices,
++    workerTraverseMs,
++    heapEmitted,
++    frontierDrained,
+     chunks,
+     pixelLimit,
+   };
