@@ -32,3 +32,6 @@ jobs:
 
       - name: Tests
         run: npm run test
+
+      - name: Native traversal differential tests
+        run: cargo test --manifest-path rust/spark-rs/Cargo.toml --lib
