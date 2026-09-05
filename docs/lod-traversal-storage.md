@@ -4,6 +4,8 @@
 
 Best-first heap entries, tuple tie priorities, budget termination, per-instance output order and paging request order are unchanged. The existing `outputSize`, `frontierSize`, `leafCount` and `pixelLimit` definitions are unchanged. This change does not add an approximate queue, throttle, or quality policy.
 
+The distribution workflow also rebuilds when Rust sources change, so a Rust-only contribution cannot leave the published worker at its old implementation.
+
 The real core is exercised by native tests against a retained upstream reference at `722255799e26db7cc41c2649638b0aa5214624c6`. Tests include 2,304 seeded combinations, threshold/priority ties, multiple instances of shared trees, transformed views and foveation, extreme budgets, remapped/resident/missing chunks, grow/shrink reuse and release after final tree disposal. An equal-depth alpha fixture requires the exact upstream output order, not just the same selection set.
 
 ```sh
