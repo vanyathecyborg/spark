@@ -50,6 +50,7 @@ try {
     "native-multiple-hosts",
     "native-encoding",
     "native-sh-generation",
+    "native-radix-fallback",
   ]) {
     const page = await browser.newPage();
     const pageErrors = [];
@@ -85,6 +86,10 @@ try {
   await run("scripts/validate-native-browser.mjs", [
     `${base}native-composite.html`,
     `${output}/composite`,
+  ]);
+  await run("scripts/validate-radix-browser.mjs", [
+    `${base}radix-sort.html`,
+    `${output}/radix.json`,
   ]);
   console.log(`Native browser results: ${output}`);
 } finally {
