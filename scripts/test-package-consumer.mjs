@@ -25,8 +25,12 @@ try {
     ),
   );
   assert(
+    archive.files.some((file) => file.path === "NOTICE"),
+    "Package must include third-party notices",
+  );
+  assert(
     !archive.files.some((file) =>
-      /\.(?:spz|splat|ply|rad|png|jpe?g|webm|mp4)$/i.test(file.path),
+      /\.(?:spz|splat|ply|spx|rad|png|jpe?g|webm|mp4)$/i.test(file.path),
     ),
     "Scene assets or captures must not enter the library package",
   );
