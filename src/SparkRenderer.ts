@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { ExtSplats } from "./ExtSplats";
+import { OrderingBufferPool } from "./OrderingBufferPool";
 import { PackedSplats } from "./PackedSplats";
 import { Readback } from "./Readback";
 import {
@@ -425,6 +426,7 @@ export class SparkRenderer<
   onDirty?: () => void;
   dirty: boolean;
 
+  private readonly orderingBuffers = new OrderingBufferPool();
   orderingTexture: THREE.DataTexture | null = null;
   maxSplats = 0;
   /** Sorted instance count for the committed generation. */
@@ -804,6 +806,7 @@ export class SparkRenderer<
       this.orderingTexture.dispose();
       this.orderingTexture = null;
     }
+    this.orderingBuffers.clear();
 
     const accumulators = new Set<SplatAccumulator>();
     accumulators.add(this.display);
@@ -1165,7 +1168,7 @@ export class SparkRenderer<
       const orderingMaxSplats = rows * 16384;
       this.maxSplats = Math.max(this.maxSplats, orderingMaxSplats);
 
-      const ordering = new Uint32Array(this.maxSplats);
+      const ordering = this.orderingBuffers.take(this.maxSplats);
       const readback = Readback.ensureBuffer(maxSplats, this.readback32);
       this.readback32 = readback;
 
@@ -1217,8 +1220,10 @@ export class SparkRenderer<
         );
         orderingTexture.internalFormat = "RGBA32UI";
         orderingTexture.needsUpdate = true;
+        this.orderingBuffers.attach(orderingTexture, result.ordering);
         this.orderingTexture = orderingTexture;
       } else {
+        this.orderingBuffers.attach(this.orderingTexture, result.ordering);
         const renderer = this.requireWebGLRenderer();
         if (!renderer.properties.has(this.orderingTexture)) {
           this.orderingTexture.needsUpdate = true;
