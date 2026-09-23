@@ -1,15 +1,20 @@
 import * as THREE from "three";
+import { ExtSplats } from "./ExtSplats";
+import { PackedSplats } from "./PackedSplats";
+import { Readback } from "./Readback";
 import {
-  ExtSplats,
-  PackedSplats,
-  PagedSplats,
-  Readback,
-  type SplatGenerator,
-  SplatMesh,
-  SplatPager,
-} from ".";
+  type RendererAdapter,
+  type SparkHostRenderer,
+  createRendererAdapter,
+  isWebGLRenderer,
+} from "./RendererAdapter";
+import { getSparkRendererCapabilities } from "./RendererCapabilities";
+import type { SparkRenderStats } from "./SparkRenderStats";
 import { SplatAccumulator } from "./SplatAccumulator";
+import type { SplatGenerator } from "./SplatGenerator";
 import { SplatGeometry } from "./SplatGeometry";
+import { SplatMesh } from "./SplatMesh";
+import { PagedSplats, SplatPager } from "./SplatPager";
 import { SplatWorker } from "./SplatWorker";
 import { SPLAT_TEX_HEIGHT, SPLAT_TEX_WIDTH } from "./defines";
 import { getShaders } from "./shaders";
@@ -22,14 +27,18 @@ import {
   uploadU32DataTextureRows,
 } from "./utils";
 
-export interface SparkRendererOptions {
+import { SparkNativeRenderer } from "./SparkNativeRenderer";
+
+export interface SparkRendererOptions<
+  R extends SparkHostRenderer = THREE.WebGLRenderer,
+> {
   /**
    * Pass in your THREE.WebGLRenderer instance so Spark can perform work
    * outside the usual render loop. Should be created with antialias: false
    * (default setting) as WebGL anti-aliasing doesn't improve Gaussian Splatting
    * rendering and significantly reduces performance.
    */
-  renderer: THREE.WebGLRenderer;
+  renderer: R;
   /**
    * Callback function to be called when SparkRenderer needs to re-render,
    * for example when splat sort order or LoD updates complete. May fire
@@ -332,14 +341,62 @@ export interface SparkRendererOptions {
   depthWrite?: boolean;
 }
 
-export class SparkRenderer extends THREE.Mesh {
-  readonly renderer: THREE.WebGLRenderer;
-  readonly material: THREE.ShaderMaterial;
+export class SparkRenderer<
+  R extends SparkHostRenderer = THREE.WebGLRenderer,
+> extends THREE.Mesh {
+  readonly renderer: R;
+  readonly material: R extends THREE.WebGLRenderer
+    ? THREE.ShaderMaterial
+    : THREE.Material;
+  private readonly adapter: RendererAdapter;
+  private readonly native: SparkNativeRenderer | null;
+  private disposed = false;
+
+  get isWebGPU() {
+    return this.adapter.kind === "webgpu";
+  }
+  get webgpuBackend() {
+    return this.native?.backend ?? null;
+  }
+  getCapabilities() {
+    return getSparkRendererCapabilities(this.renderer);
+  }
+
+  /** Counts for the committed generation, excluding inactive depth entries. */
+  getRenderStats(): SparkRenderStats {
+    return (
+      this.native?.getRenderStats() ?? {
+        generation: this.display.version,
+        selectedSplats: this.display.mapping.reduce(
+          (sum, mesh) => sum + mesh.count,
+          0,
+        ),
+        drawnSplats: this.activeSplats,
+        ordering: "readback",
+      }
+    );
+  }
+
+  /** Read counts for the generation committed when called; this may wait for the GPU. */
+  readRenderStatsAsync(): Promise<SparkRenderStats> {
+    if (this.disposed)
+      return Promise.reject(new Error("SparkRenderer is disposed"));
+    return (
+      this.native?.readRenderStatsAsync() ??
+      Promise.resolve(this.getRenderStats())
+    );
+  }
+
+  private requireWebGLRenderer(): THREE.WebGLRenderer {
+    if (this.adapter.kind !== "webgl")
+      throw new Error("Spark: this operation requires THREE.WebGLRenderer");
+    return this.adapter.renderer;
+  }
   readonly uniforms: ReturnType<typeof SparkRenderer.makeUniforms>;
 
   autoUpdate: boolean;
   preUpdate: boolean;
-  static sparkOverride?: SparkRenderer;
+  static sparkOverride?: SparkRenderer<SparkHostRenderer>;
 
   renderSize = new THREE.Vector2();
   maxStdDev: number;
@@ -370,6 +427,7 @@ export class SparkRenderer extends THREE.Mesh {
 
   orderingTexture: THREE.DataTexture | null = null;
   maxSplats = 0;
+  /** Sorted instance count for the committed generation. */
   activeSplats = 0;
 
   display: SplatAccumulator;
@@ -470,7 +528,7 @@ export class SparkRenderer extends THREE.Mesh {
   sortPause = 0;
   sortDelay = 0;
 
-  constructor(options: SparkRendererOptions) {
+  constructor(options: SparkRendererOptions<R>) {
     if (!options) {
       throw new Error("SparkRenderer options are required");
     }
@@ -478,6 +536,21 @@ export class SparkRenderer extends THREE.Mesh {
       throw new Error("renderer is required in SparkRenderer options");
     }
 
+    const adapter = createRendererAdapter(options.renderer);
+    if (
+      adapter.kind === "webgpu" &&
+      (options.target ||
+        options.vertexShader ||
+        options.fragmentShader ||
+        options.extraUniforms ||
+        options.depthWrite ||
+        options.depthTest === false ||
+        options.transparent === false)
+    ) {
+      throw new Error(
+        "Spark: custom targets, shaders and material overrides require THREE.WebGLRenderer.",
+      );
+    }
     const uniforms = SparkRenderer.makeUniforms();
     Object.assign(uniforms, options.extraUniforms ?? {});
 
@@ -498,7 +571,23 @@ export class SparkRenderer extends THREE.Mesh {
     });
 
     super(geometry, material);
-    this.material = material;
+    this.adapter = adapter;
+    if (adapter.kind === "webgpu") {
+      geometry.dispose();
+      material.dispose();
+      this.geometry = new THREE.BufferGeometry();
+      // Hide only the placeholder draw, preserving visibility of child splats.
+      this.material = new THREE.MeshBasicMaterial({
+        visible: false,
+        premultipliedAlpha,
+      }) as THREE.Material as SparkRenderer<R>["material"];
+    } else {
+      this.material = material as SparkRenderer<R>["material"];
+    }
+    this.native =
+      adapter.kind === "webgpu"
+        ? new SparkNativeRenderer(this, adapter.renderer, adapter.device)
+        : null;
     this.uniforms = uniforms;
     // Disable frustum culling because we want to always draw them all
     // and cull Gsplats individually in the shader
@@ -573,9 +662,10 @@ export class SparkRenderer extends THREE.Mesh {
     this.accumulators.push(new SplatAccumulator(accumulatorOptions));
 
     // Check if the provoking vertex convention should be changed
-    const provokingVertexExt = this.renderer
-      .getContext()
-      .getExtension("WEBGL_provoking_vertex");
+    const provokingVertexExt =
+      adapter.kind === "webgl"
+        ? adapter.renderer.getContext().getExtension("WEBGL_provoking_vertex")
+        : null;
     if (provokingVertexExt) {
       provokingVertexExt.provokingVertexWEBGL(
         provokingVertexExt.FIRST_VERTEX_CONVENTION_WEBGL,
@@ -684,6 +774,9 @@ export class SparkRenderer extends THREE.Mesh {
   }
 
   dispose() {
+    if (this.disposed) return;
+    this.disposed = true;
+    this.native?.dispose();
     // @ts-ignore Object3D has a dispose method in Three.js >= r186
     super.dispose?.();
 
@@ -722,7 +815,7 @@ export class SparkRenderer extends THREE.Mesh {
       accumulator.dispose();
     }
 
-    const instances = this.lodInstances.values();
+    const instances = [...this.lodInstances.values()];
     this.lodInstances.clear();
     for (const instance of instances) {
       instance.texture.dispose();
@@ -750,10 +843,18 @@ export class SparkRenderer extends THREE.Mesh {
   }
 
   onBeforeRender(
-    renderer: THREE.WebGLRenderer,
+    renderer: SparkHostRenderer,
     scene: THREE.Scene,
     camera: THREE.Camera,
-  ) {
+  ): void | Promise<void> {
+    if (this.disposed) return;
+    if (this.native) {
+      if (this.autoUpdate)
+        return this.updateInternal({ scene, camera, autoUpdate: true });
+      return;
+    }
+    if (!isWebGLRenderer(renderer))
+      throw new Error("Spark: expected the configured WebGL renderer");
     const spark = SparkRenderer.sparkOverride ?? this;
 
     const frame = renderer.info.render.frame;
@@ -933,10 +1034,15 @@ export class SparkRenderer extends THREE.Mesh {
     camera: THREE.Camera;
     autoUpdate: boolean;
   }) {
-    const renderer = this.renderer;
-    if (this.ownsTimer) {
-      this.timer.update();
+    if (this.disposed) throw new Error("SparkRenderer is disposed");
+    if (this.ownsTimer) this.timer.update();
+    if (this.native) {
+      const visibleGenerators = await this.native.update(scene, camera);
+      if (this.enableDriveLod && !this.disposed)
+        this.driveLod({ visibleGenerators, camera, scene });
+      return;
     }
+    const renderer = this.requireWebGLRenderer();
 
     const center = camera.getWorldPosition(new THREE.Vector3());
     const dir = camera.getWorldDirection(new THREE.Vector3());
@@ -1018,7 +1124,7 @@ export class SparkRenderer extends THREE.Mesh {
   }
 
   private async driveSort() {
-    if (this.sorting || !this.sortDirty) {
+    if (this.disposed || this.sorting || !this.sortDirty) {
       return;
     }
 
@@ -1043,98 +1149,109 @@ export class SparkRenderer extends THREE.Mesh {
     this.sortDirty = false;
     this.lastSortTime = now;
 
-    if (this.readPause > 0) {
-      await new Promise((resolve) => setTimeout(resolve, this.readPause));
-    }
-
-    const current = this.current;
-
-    this.sortedCenter.copy(current.viewOrigin);
-    this.sortedDir.copy(current.viewDirection);
-
-    const { numSplats, maxSplats } = current;
-    const rows = Math.max(1, Math.ceil(maxSplats / 16384));
-    const orderingMaxSplats = rows * 16384;
-    this.maxSplats = Math.max(this.maxSplats, orderingMaxSplats);
-
-    const ordering = new Uint32Array(this.maxSplats);
-    const readback = Readback.ensureBuffer(maxSplats, this.readback32);
-    this.readback32 = readback;
-
-    await this.readbackDepth({
-      current,
-      renderer: this.renderer,
-      numSplats,
-      readback,
-    });
-
-    if (this.sortPause > 0) {
-      await new Promise((resolve) => setTimeout(resolve, this.sortPause));
-    }
-
-    if (!this.sortWorker) {
-      this.sortWorker = new SplatWorker();
-    }
-    const result = await this.sortWorker.call("sortSplats32", {
-      numSplats,
-      readback,
-      ordering,
-    });
-
-    if (this.sortDelay > 0) {
-      await new Promise((resolve) => setTimeout(resolve, this.sortDelay));
-    }
-
-    this.readback32 = result.readback;
-
-    this.activeSplats = result.activeSplats;
-
-    if (this.orderingTexture) {
-      if (rows > this.orderingTexture.image.height) {
-        this.orderingTexture.dispose();
-        this.orderingTexture = null;
+    try {
+      if (this.readPause > 0) {
+        await new Promise((resolve) => setTimeout(resolve, this.readPause));
       }
-    }
 
-    if (!this.orderingTexture) {
-      // console.log(`Allocating orderingTexture: ${4096}x${rows}`);
-      const orderingTexture = new THREE.DataTexture(
-        result.ordering,
-        4096,
-        rows,
-        THREE.RGBAIntegerFormat,
-        THREE.UnsignedIntType,
-      );
-      orderingTexture.internalFormat = "RGBA32UI";
-      orderingTexture.needsUpdate = true;
-      this.orderingTexture = orderingTexture;
-    } else {
-      const renderer = this.renderer;
-      if (!renderer.properties.has(this.orderingTexture)) {
-        this.orderingTexture.needsUpdate = true;
-      } else {
-        uploadU32DataTextureRows(
-          renderer,
-          this.orderingTexture,
+      if (this.disposed) return;
+      const current = this.current;
+
+      this.sortedCenter.copy(current.viewOrigin);
+      this.sortedDir.copy(current.viewDirection);
+
+      const { numSplats, maxSplats } = current;
+      const rows = Math.max(1, Math.ceil(maxSplats / 16384));
+      const orderingMaxSplats = rows * 16384;
+      this.maxSplats = Math.max(this.maxSplats, orderingMaxSplats);
+
+      const ordering = new Uint32Array(this.maxSplats);
+      const readback = Readback.ensureBuffer(maxSplats, this.readback32);
+      this.readback32 = readback;
+
+      await this.readbackDepth({
+        current,
+        renderer: this.requireWebGLRenderer(),
+        numSplats,
+        readback,
+      });
+
+      if (this.sortPause > 0) {
+        await new Promise((resolve) => setTimeout(resolve, this.sortPause));
+      }
+
+      if (this.disposed) return;
+      if (!this.sortWorker) {
+        this.sortWorker = new SplatWorker();
+      }
+      const result = await this.sortWorker.call("sortSplats32", {
+        numSplats,
+        readback,
+        ordering,
+      });
+
+      if (this.sortDelay > 0) {
+        await new Promise((resolve) => setTimeout(resolve, this.sortDelay));
+      }
+
+      if (this.disposed) return;
+      this.readback32 = result.readback;
+
+      this.activeSplats = result.activeSplats;
+
+      if (this.orderingTexture) {
+        if (rows > this.orderingTexture.image.height) {
+          this.orderingTexture.dispose();
+          this.orderingTexture = null;
+        }
+      }
+
+      if (!this.orderingTexture) {
+        // console.log(`Allocating orderingTexture: ${4096}x${rows}`);
+        const orderingTexture = new THREE.DataTexture(
+          result.ordering,
           4096,
           rows,
-          result.ordering,
+          THREE.RGBAIntegerFormat,
+          THREE.UnsignedIntType,
         );
+        orderingTexture.internalFormat = "RGBA32UI";
+        orderingTexture.needsUpdate = true;
+        this.orderingTexture = orderingTexture;
+      } else {
+        const renderer = this.requireWebGLRenderer();
+        if (!renderer.properties.has(this.orderingTexture)) {
+          this.orderingTexture.needsUpdate = true;
+        } else {
+          uploadU32DataTextureRows(
+            renderer,
+            this.orderingTexture,
+            4096,
+            rows,
+            result.ordering,
+          );
+        }
       }
-    }
 
-    // console.log(`Sorted (${this.minSortIntervalMs}) ${numSplats} splats in ${(performance.now() - now).toFixed(0)} ms`);
+      // console.log(`Sorted (${this.minSortIntervalMs}) ${numSplats} splats in ${(performance.now() - now).toFixed(0)} ms`);
 
-    if (this.current.mappingVersion === current.mappingVersion) {
-      if (this.current.mappingVersion !== this.display.mappingVersion) {
-        this.accumulators.push(this.display);
-        this.display = this.current;
+      if (this.current.mappingVersion === current.mappingVersion) {
+        if (this.current.mappingVersion !== this.display.mappingVersion) {
+          this.accumulators.push(this.display);
+          this.display = this.current;
+        }
       }
+      this.setDirty();
+    } catch (error) {
+      // Disposing the worker rejects its outstanding call. That cancellation
+      // must not revive resources or escape a scheduled background sort.
+      if (this.disposed) return;
+      this.sortDirty = true;
+      throw error;
+    } finally {
+      this.sorting = false;
     }
-    this.sorting = false;
-    this.setDirty();
-
-    this.driveSort();
+    if (!this.disposed) this.driveSort();
   }
 
   private ensureLodWorker() {
@@ -1269,7 +1386,7 @@ export class SparkRenderer extends THREE.Mesh {
     this.ensureLodWorker().tryExclusive(async (worker) => {
       if (hasPaged && !this.pager) {
         this.pager = new SplatPager({
-          renderer: this.renderer,
+          renderer: this.requireWebGLRenderer(),
           extSplats: this.pagedExtSplats,
           maxSplats: this.maxPagedSplats,
           numFetchers: this.numLodFetchers,
@@ -1618,6 +1735,7 @@ export class SparkRenderer extends THREE.Mesh {
       { lodId: number; numSplats: number; indices: Uint32Array }
     >,
   ) {
+    if (this.disposed) return;
     // console.log("updateLodIndices", keyIndices);
     for (const [uuid, countIndices] of Object.entries(keyIndices)) {
       const { lodId, numSplats, indices } = countIndices;
@@ -1656,15 +1774,20 @@ export class SparkRenderer extends THREE.Mesh {
           instance.numSplats = numSplats;
           // instance.indices.set(indices.subarray(0, numSplats));
 
-          const renderer = this.renderer;
-          if (renderer.properties.has(instance.texture)) {
-            uploadU32DataTextureRows(
-              renderer,
-              instance.texture,
-              4096,
-              rows,
-              indices,
-            );
+          if (this.native) {
+            instance.indices = indices;
+            instance.texture.image.data = indices;
+          } else {
+            const renderer = this.requireWebGLRenderer();
+            if (renderer.properties.has(instance.texture)) {
+              uploadU32DataTextureRows(
+                renderer,
+                instance.texture,
+                4096,
+                rows,
+                indices,
+              );
+            }
           }
         }
       }
@@ -1779,7 +1902,21 @@ export class SparkRenderer extends THREE.Mesh {
     return texture;
   })();
 
-  render(scene: THREE.Scene, camera: THREE.Camera) {
+  /**
+   * Native WebGPU resolves after update and draw submission. Classic WebGL keeps
+   * its existing background updates. Neither route waits for GPU completion.
+   */
+  async renderAsync(scene: THREE.Scene, camera: THREE.Camera): Promise<void> {
+    if (this.native) return this.native.renderAsync(scene, camera);
+    this.render(scene, camera);
+  }
+
+  render(scene: THREE.Scene, camera: THREE.Camera): void {
+    if (this.disposed) throw new Error("SparkRenderer is disposed");
+    if (this.native)
+      throw new Error(
+        "Spark: use await renderAsync(scene, camera) for native WebGPU",
+      );
     try {
       SparkRenderer.sparkOverride = this;
       this.renderer.render(scene, camera);
@@ -1797,14 +1934,14 @@ export class SparkRenderer extends THREE.Mesh {
       throw new Error("No target");
     }
 
-    const previousTarget = this.renderer.getRenderTarget();
+    const previousTarget = this.requireWebGLRenderer().getRenderTarget();
     try {
-      this.renderer.setRenderTarget(target);
+      this.requireWebGLRenderer().setRenderTarget(target);
       SparkRenderer.sparkOverride = this;
       this.renderer.render(scene, camera);
     } finally {
       SparkRenderer.sparkOverride = undefined;
-      this.renderer.setRenderTarget(previousTarget);
+      this.requireWebGLRenderer().setRenderTarget(previousTarget);
     }
 
     if (target !== this.target) {
@@ -1829,7 +1966,7 @@ export class SparkRenderer extends THREE.Mesh {
     }
     const superPixels = this.superPixels;
 
-    await this.renderer.readRenderTargetPixelsAsync(
+    await this.requireWebGLRenderer().readRenderTargetPixelsAsync(
       this.target,
       0,
       0,
@@ -1963,7 +2100,7 @@ export class SparkRenderer extends THREE.Mesh {
     try {
       SparkRenderer.sparkOverride = this;
       // Update the CubeCamera, which performs 6 cube face renders
-      cubeCamera.update(this.renderer, scene);
+      cubeCamera.update(this.requireWebGLRenderer(), scene);
     } finally {
       SparkRenderer.sparkOverride = undefined;
     }
@@ -1990,7 +2127,7 @@ export class SparkRenderer extends THREE.Mesh {
       const byteSize = width * height * 4;
       const readback = new Uint8Array(byteSize);
       buffers.push(readback);
-      const promise = this.renderer.readRenderTargetPixelsAsync(
+      const promise = this.requireWebGLRenderer().readRenderTargetPixelsAsync(
         SparkRenderer.cubeRender.target,
         0,
         0,
@@ -2040,7 +2177,9 @@ export class SparkRenderer extends THREE.Mesh {
     });
     // Pre-filter the cube map using THREE.PMREMGenerator if requested
     if (!SparkRenderer.pmrem) {
-      SparkRenderer.pmrem = new THREE.PMREMGenerator(this.renderer);
+      SparkRenderer.pmrem = new THREE.PMREMGenerator(
+        this.requireWebGLRenderer(),
+      );
     }
 
     return SparkRenderer.pmrem?.fromCubemap(cubeTexture).texture;

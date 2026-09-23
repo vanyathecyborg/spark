@@ -1,12 +1,12 @@
 import * as THREE from "three";
 
 import { decode_rad_header } from "spark-rs";
-import { LN_SCALE_MAX, LN_SCALE_MIN, dyno } from ".";
 import { evaluateExtSH } from "./ExtSplats";
 import { evaluatePackedSH } from "./PackedSplats";
 import { getSplatFileType, getSplatFileTypeFromPath } from "./SplatLoader";
 import type { SplatSource } from "./SplatMesh";
 import { workerPool } from "./SplatWorker";
+import { LN_SCALE_MAX, LN_SCALE_MIN } from "./defines";
 import {
   DEFAULT_SPLAT_ENCODING,
   type ExtResult,
@@ -15,6 +15,7 @@ import {
   type SplatEncoding,
   SplatFileType,
 } from "./defines";
+import * as dyno from "./dyno";
 import { type DynoUsampler2DArray, pagedSplatTexCoord } from "./dyno";
 import {
   decodeExtSplat,
