@@ -278,6 +278,7 @@ pub fn init_lod_tree(num_splats: u32, lod_tree: Uint32Array) -> Result<Object, J
 pub fn dispose_lod_tree(lod_id: u32) {
     STATE.with_borrow_mut(|state| {
         state.lod_trees.remove(&lod_id);
+        state.traversal.forget_tree(lod_id);
         if state.lod_trees.is_empty() {
             state.traversal = traversal::Buffers::default();
         }
