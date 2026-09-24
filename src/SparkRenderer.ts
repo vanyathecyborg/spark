@@ -1101,6 +1101,7 @@ export class SparkRenderer<
           Object.getPrototypeOf(node) === SplatMesh.prototype &&
           node instanceof SplatMesh &&
           node.hasNativeSourceGenerator() &&
+          !node.onFrame &&
           !node.paged &&
           !node.covSplats &&
           (Object.getPrototypeOf(node.splats) === PackedSplats.prototype ||
