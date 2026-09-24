@@ -1,0 +1,39 @@
+<!doctype html><html><head><link rel="icon" href="data:,"></head><body><script type="module">
+import * as THREE from 'three';
+import {SparkRenderer,SplatMesh,PackedSplats} from '/src/index.ts';
+import {Readback} from '/src/Readback.ts';
+const checks=[],errors=[],cases=[];const renderer=new THREE.WebGLRenderer({antialias:false});renderer.setSize(32,32);
+window.addEventListener('unhandledrejection',e=>errors.push(String(e.reason)));
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(60,1,.1,1000);camera.position.set(.137,.291,4.319);camera.updateMatrixWorld();
+let rng=91347;const random=()=>{rng=(Math.imul(rng,1664525)+1013904223)>>>0;return rng/4294967296;};
+const source=new PackedSplats({construct:data=>{for(let i=0;i<10000;i++)data.pushSplat(new THREE.Vector3((random()-.5)*20,(random()-.5)*20,(random()-.5)*20),new THREE.Vector3(.02,.03,.04),new THREE.Quaternion(),1,new THREE.Color(1,0,0));}});await source.initialized;
+const mesh=new SplatMesh({packedSplats:source});await mesh.initialized;scene.add(mesh);
+const spark=new SparkRenderer({renderer,enableLod:false,autoUpdate:false,minSortIntervalMs:0});scene.add(spark);
+const f=Math.fround, bits=new Uint32Array(1), floats=new Float32Array(bits.buffer);
+try{
+ for(const scale of [1,1.75,.625])for(const radial of [true,false]){
+  mesh.scale.setScalar(scale);mesh.position.set(.117,-.253,.379);spark.sortRadial=radial;
+  await spark.update({scene,camera});
+  const current=spark.current;
+  const raw=Readback.ensureBuffer(current.maxSplats,new Uint32Array());
+  await spark.readbackDepth({current,renderer,numSplats:current.numSplats,readback:raw});
+  let mismatches=0;const examples=[];
+  for(let i=0;i<source.numSplats;i++){
+   const center=source.getSplat(i).center;
+   const x=f(f(f(center.x)*f(scale))+f(mesh.position.x));
+   const y=f(f(f(center.y)*f(scale))+f(mesh.position.y));
+   const z=f(f(f(center.z)*f(scale))+f(mesh.position.z));
+   const dx=f(x-f(camera.position.x)),dy=f(y-f(camera.position.y)),dz=f(z-f(camera.position.z));
+   // Explicit f32 operations still cannot promise the GPU length/FMA result.
+   floats[0]=radial?f(Math.sqrt(f(f(f(dx*dx)+f(dy*dy))+f(dz*dz)))):f(f(-dz)+100);
+   if(bits[0]!==raw[i]){mismatches++;if(examples.length<8)examples.push({index:i,cpuKey:bits[0],gpuKey:raw[i]});}
+  }
+  cases.push({scale,radial,count:source.numSplats,mismatches,examples});
+ }
+ const exact=cases.every(c=>c.mismatches===0);
+ checks.push({name:'actual generated-depth readback completed',ok:cases.length===6});
+ checks.push({name:'no unhandled errors',ok:errors.length===0});
+ window.lifecycleResult={passed:checks.every(c=>c.ok),checks,errors,cases,exact,
+   verdict:exact?'CPU prototype passes these fixtures only; broader eligibility remains unproven':'CPU prototype fails exact-key gate; do not promote worker-center sorting'};
+}catch(e){window.lifecycleResult={passed:false,checks,errors,error:String(e)};}finally{spark.dispose();mesh.dispose();source.dispose();renderer.dispose();}
+</script></body></html>

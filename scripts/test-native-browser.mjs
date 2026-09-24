@@ -41,6 +41,7 @@ try {
     "native-lifecycle",
     "webgl-disposal",
     "webgl-radial-invalidation",
+    "webgl-center-feasibility",
     "native-counts",
     "native-device",
     "native-features",
