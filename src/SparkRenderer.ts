@@ -12,6 +12,7 @@ import {
 import { getSparkRendererCapabilities } from "./RendererCapabilities";
 import type { SparkRenderStats } from "./SparkRenderStats";
 import { SplatAccumulator } from "./SplatAccumulator";
+import { isSplatEdit } from "./SplatEdit";
 import type { SplatGenerator } from "./SplatGenerator";
 import { SplatGeometry } from "./SplatGeometry";
 import { SplatMesh } from "./SplatMesh";
@@ -1057,9 +1058,8 @@ export class SparkRenderer<
     const center = camera.getWorldPosition(new THREE.Vector3());
     const dir = camera.getWorldDirection(new THREE.Vector3());
 
-    const viewChanged =
-      center.distanceTo(this.sortedCenter) > 0.001 ||
-      dir.dot(this.sortedDir) < 0.999;
+    const positionChanged = center.distanceTo(this.sortedCenter) > 0.001;
+    const directionChanged = dir.dot(this.sortedDir) < 0.999;
 
     const next = this.accumulators.pop();
     if (!next) {
@@ -1085,6 +1085,39 @@ export class SparkRenderer<
       });
 
     let doUpdate = true;
+    // Only omit orientation invalidation for proven built-in generation.
+    // prepareGenerate/frameUpdate above still observes changes on every update.
+    let directionIndependent = false;
+    if (
+      (this.sortRadial ?? true) &&
+      directionChanged &&
+      !positionChanged &&
+      !renderer.xr.isPresenting
+    ) {
+      directionIndependent = visibleGenerators.every(
+        (node) =>
+          Object.getPrototypeOf(node) === SplatMesh.prototype &&
+          node instanceof SplatMesh &&
+          node.hasNativeSourceGenerator() &&
+          !node.paged &&
+          !node.covSplats &&
+          (Object.getPrototypeOf(node.splats) === PackedSplats.prototype ||
+            Object.getPrototypeOf(node.splats) === ExtSplats.prototype) &&
+          !node.objectModifiers?.length &&
+          !node.worldModifiers?.length &&
+          !node.covObjectModifiers?.length &&
+          !node.covWorldModifiers?.length &&
+          !node.skinning &&
+          !node.edits?.length &&
+          !node.rgbaDisplaceEdits &&
+          !node.splatRgba,
+      );
+      scene.traverseVisible((node) => {
+        if (isSplatEdit(node)) directionIndependent = false;
+      });
+    }
+    const viewChanged =
+      positionChanged || (directionChanged && !directionIndependent);
     const needsUpdate = viewChanged || version !== this.current.version;
     const mappingUpdated = mappingVersion !== this.display.mappingVersion;
 
