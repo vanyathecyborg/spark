@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { ExtSplats } from "./ExtSplats";
+import { OrderingBufferPool } from "./OrderingBufferPool";
+import { OrderingTrace } from "./OrderingTrace";
 import { PackedSplats } from "./PackedSplats";
 import { Readback } from "./Readback";
 import {
@@ -11,6 +13,7 @@ import {
 import { getSparkRendererCapabilities } from "./RendererCapabilities";
 import type { SparkRenderStats } from "./SparkRenderStats";
 import { SplatAccumulator } from "./SplatAccumulator";
+import { isSplatEdit } from "./SplatEdit";
 import type { SplatGenerator } from "./SplatGenerator";
 import { SplatGeometry } from "./SplatGeometry";
 import { SplatMesh } from "./SplatMesh";
@@ -428,6 +431,7 @@ export class SparkRenderer<
   onDirty?: () => void;
   dirty: boolean;
 
+  private readonly orderingBuffers = new OrderingBufferPool();
   orderingTexture: THREE.DataTexture | null = null;
   maxSplats = 0;
   /**
@@ -783,6 +787,7 @@ export class SparkRenderer<
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.orderingTrace.dispose();
     this.native?.dispose();
     // @ts-ignore Object3D has a dispose method in Three.js >= r186
     super.dispose?.();
@@ -811,6 +816,7 @@ export class SparkRenderer<
       this.orderingTexture.dispose();
       this.orderingTexture = null;
     }
+    this.orderingBuffers.clear();
 
     const accumulators = new Set<SplatAccumulator>();
     accumulators.add(this.display);
@@ -1054,9 +1060,8 @@ export class SparkRenderer<
     const center = camera.getWorldPosition(new THREE.Vector3());
     const dir = camera.getWorldDirection(new THREE.Vector3());
 
-    const viewChanged =
-      center.distanceTo(this.sortedCenter) > 0.001 ||
-      dir.dot(this.sortedDir) < 0.999;
+    const positionChanged = center.distanceTo(this.sortedCenter) > 0.001;
+    const directionChanged = dir.dot(this.sortedDir) < 0.999;
 
     const next = this.accumulators.pop();
     if (!next) {
@@ -1082,6 +1087,40 @@ export class SparkRenderer<
       });
 
     let doUpdate = true;
+    // Only omit orientation invalidation for proven built-in generation.
+    // prepareGenerate/frameUpdate above still observes changes on every update.
+    let directionIndependent = false;
+    if (
+      (this.sortRadial ?? true) &&
+      directionChanged &&
+      !positionChanged &&
+      !renderer.xr.isPresenting
+    ) {
+      directionIndependent = visibleGenerators.every(
+        (node) =>
+          Object.getPrototypeOf(node) === SplatMesh.prototype &&
+          node instanceof SplatMesh &&
+          node.hasNativeSourceGenerator() &&
+          !node.onFrame &&
+          !node.paged &&
+          !node.covSplats &&
+          (Object.getPrototypeOf(node.splats) === PackedSplats.prototype ||
+            Object.getPrototypeOf(node.splats) === ExtSplats.prototype) &&
+          !node.objectModifiers?.length &&
+          !node.worldModifiers?.length &&
+          !node.covObjectModifiers?.length &&
+          !node.covWorldModifiers?.length &&
+          !node.skinning &&
+          !node.edits?.length &&
+          !node.rgbaDisplaceEdits &&
+          !node.splatRgba,
+      );
+      scene.traverseVisible((node) => {
+        if (isSplatEdit(node)) directionIndependent = false;
+      });
+    }
+    const viewChanged =
+      positionChanged || (directionChanged && !directionIndependent);
     const needsUpdate = viewChanged || version !== this.current.version;
     const mappingUpdated = mappingVersion !== this.display.mappingVersion;
 
@@ -1101,6 +1140,7 @@ export class SparkRenderer<
       this.accumulators.push(next);
     } else {
       generate();
+      this.orderingTrace.generatedAt(next);
 
       if (this.flushAfterGenerate) {
         const gl = renderer.getContext() as WebGL2RenderingContext;
@@ -1128,6 +1168,23 @@ export class SparkRenderer<
       this.driveLod({ visibleGenerators, camera, scene });
     }
     await this.driveSort();
+  }
+
+  private readonly orderingTrace = new OrderingTrace();
+
+  onAfterRender(
+    _renderer: SparkHostRenderer,
+    _scene: THREE.Scene,
+    camera: THREE.Camera,
+  ): void {
+    const spark = SparkRenderer.sparkOverride ?? this;
+    if (!spark.native && !spark.disposed) {
+      spark.orderingTrace.draw(
+        spark.display.mappingVersion,
+        camera,
+        spark.activeSplats,
+      );
+    }
   }
 
   private async driveSort() {
@@ -1163,6 +1220,10 @@ export class SparkRenderer<
 
       if (this.disposed) return;
       const current = this.current;
+      const traceRequest = this.orderingTrace.request(
+        current,
+        this.sortRadial ?? true,
+      );
 
       this.sortedCenter.copy(current.viewOrigin);
       this.sortedDir.copy(current.viewDirection);
@@ -1172,7 +1233,7 @@ export class SparkRenderer<
       const orderingMaxSplats = rows * 16384;
       this.maxSplats = Math.max(this.maxSplats, orderingMaxSplats);
 
-      const ordering = new Uint32Array(this.maxSplats);
+      const ordering = this.orderingBuffers.take(this.maxSplats);
       const readback = Readback.ensureBuffer(maxSplats, this.readback32);
       this.readback32 = readback;
 
@@ -1196,6 +1257,8 @@ export class SparkRenderer<
         readback,
         ordering,
       });
+
+      const traceCompletedAt = this.orderingTrace.complete(traceRequest);
 
       if (this.sortDelay > 0) {
         await new Promise((resolve) => setTimeout(resolve, this.sortDelay));
@@ -1224,8 +1287,10 @@ export class SparkRenderer<
         );
         orderingTexture.internalFormat = "RGBA32UI";
         orderingTexture.needsUpdate = true;
+        this.orderingBuffers.attach(orderingTexture, result.ordering);
         this.orderingTexture = orderingTexture;
       } else {
+        this.orderingBuffers.attach(this.orderingTexture, result.ordering);
         const renderer = this.requireWebGLRenderer();
         if (!renderer.properties.has(this.orderingTexture)) {
           this.orderingTexture.needsUpdate = true;
@@ -1239,6 +1304,12 @@ export class SparkRenderer<
           );
         }
       }
+
+      this.orderingTrace.commit(
+        traceRequest,
+        traceCompletedAt,
+        result.activeSplats,
+      );
 
       // console.log(`Sorted (${this.minSortIntervalMs}) ${numSplats} splats in ${(performance.now() - now).toFixed(0)} ms`);
 
